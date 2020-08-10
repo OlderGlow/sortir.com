@@ -19,7 +19,7 @@ _Versions utilisées :_
 - Bootstrap 4.5
 - Composer 1.10
 
-#Lancement du projet :
+# Lancement du projet :
 
 _Commandes :_
 
