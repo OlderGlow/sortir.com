@@ -44,8 +44,8 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
     public function getCredentials(Request $request)
     {
         $credentials = [
-            'pseudo' => $request->request->get('pseudo'),
-            'password' => $request->request->get('password'),
+            'pseudo' => $request->request->get('_pseudo'),
+            'password' => $request->request->get('_password'),
             'csrf_token' => $request->request->get('_csrf_token'),
         ];
         $request->getSession()->set(
@@ -67,7 +67,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Pseudo could not be found.');
+            throw new CustomUserMessageAuthenticationException('Le pseudo n\'a pas été trouvé');
         }
 
         return $user;
@@ -77,6 +77,7 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator
     {
         // Check the user's password or other credentials and return true or false
         // If there are no credentials to check, you can just return true
+        return true;
         throw new \Exception('TODO: check the credentials inside '.__FILE__);
     }
 

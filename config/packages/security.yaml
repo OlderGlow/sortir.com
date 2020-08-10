@@ -23,7 +23,7 @@ security:
             form_login:
                 login_path: user_login
                 check_path: user_login
-                default_target_path: home
+                default_target_path: /connexion
             logout:
                 path: security_logout
                 target: /
@@ -31,6 +31,9 @@ security:
                 secret:   '%kernel.secret%'
                 lifetime: 3600 # 1 hour in seconds
                 path:     /
+            guard:
+                 authenticators:
+                     - App\Security\LoginAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
