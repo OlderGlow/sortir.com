@@ -21,8 +21,8 @@ security:
             anonymous: true
             provider: my_providers
             form_login:
-                login_path: security_login
-                check_path: security_login
+                login_path: user_login
+                check_path: user_login
                 default_target_path: home
             logout:
                 path: security_logout
@@ -47,3 +47,4 @@ security:
         - { path: ^/lieux, roles: ROLE_ADMIN }
         - { path: ^/profil, roles: ROLE_USER }
         - { path: ^/sorties, roles: ROLE_USER }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
