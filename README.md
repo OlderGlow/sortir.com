@@ -7,13 +7,20 @@ _Développé par :_
 - PICQUET Julien
 
 _Langages utilisés :_
-- PhP (Symfony 4.4)
+- PhP & Symfony
 - HTML/TwiG
-- CSS (Bootstrap 4.5)
+- CSS & Bootstrap
 - Javascript (+jQuery)
 - ORM Doctrine
 
-_Lancement du projet :_
+_Versions utilisées :_
+- PhP 7.3.*
+- Symfony 4.4.* (LTS)
+- Bootstrap 4.5
+- Composer 1.10
+
+#Lancement du projet :
+_Commandes :_
 
 `composer install`
 
