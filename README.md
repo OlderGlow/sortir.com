@@ -26,3 +26,8 @@ _Commandes :_
 `composer install`
 
 `symfony serve`
+
+# Fonctionnalités :
+
+- Login/Logout
+- Redirect to /connexion lorsque un anonyme arrive sur /
