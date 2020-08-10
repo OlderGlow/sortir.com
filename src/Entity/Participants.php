@@ -83,7 +83,7 @@ class Participants implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Campus", inversedBy="listParticipants")
-     * @ORM\JoinColumn(name="Campus", referencedColumnName="id")
+     * @ORM\JoinColumn(name="campus", referencedColumnName="id")
      */
     private $campus;
 
