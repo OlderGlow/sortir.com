@@ -3,6 +3,7 @@ Mise en place de la base de toutes nos pages en HTML5. Importation de Bootstrap,
 Mise en place de block que l'on pourra modifier selon nos différentes pages du projet. (Body, Title...)
 Import de nos includes. (Header, Footer...)
 -->
+{% set route_name = app.request.attributes.get('_route') %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
