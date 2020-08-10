@@ -31,3 +31,8 @@ _Commandes :_
 
 - Login/Logout
 - Redirect to /connexion lorsque un anonyme arrive sur /
+
+# Fonctionnalités :
+
+- Login/Logout
+- Redirect to /connexion lorsque un anonyme arrive sur /
