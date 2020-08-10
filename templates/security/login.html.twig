@@ -4,12 +4,11 @@
 
 {% block body %}
 <form method="post">
-    <div class="container">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <div class="container mt-4">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+    <h1 class="h3 mb-3 font-weight-normal">Connectez-vous</h1>
     <label for="inputPseudo">Pseudo</label>
     <input type="text" value="{{ last_username }}" name="pseudo" id="inputPseudo" class="form-control" required autofocus>
     <label for="inputPassword">Password</label>
