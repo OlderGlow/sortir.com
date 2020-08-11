@@ -25,7 +25,7 @@ class AdminDashboardController extends AbstractController
     }
 
     /**
-     * @Route("/ville", name="admin.ville.home")
+     * @Route("/villes", name="admin.ville.home")
      */
     public function homeVille(PaginatorInterface $paginator, Request $request, VillesRepository $villesRepository)
     {
@@ -45,7 +45,7 @@ class AdminDashboardController extends AbstractController
     }
 
     /**
-     * @Route("/ville/ajouter", name="admin.ville.add")
+     * @Route("/villes/ajouter", name="admin.ville.add")
      */
     public function add(Request $request)
     {
@@ -68,7 +68,7 @@ class AdminDashboardController extends AbstractController
     }
 
    /**
-     * @Route("/ville/{id}", name="admin.ville.edit")
+     * @Route("/villes/{id}", name="admin.ville.edit")
      * @param Villes $villes
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -94,7 +94,7 @@ class AdminDashboardController extends AbstractController
 
 
     /**
-     * @Route("/ville/delete", name="admin.ville")
+     * @Route("/villes/delete", name="admin.ville")
      * @param Villes $villes
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
