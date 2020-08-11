@@ -8,7 +8,9 @@ use App\Repository\VillesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AdminDashboardController extends AbstractController
@@ -25,7 +27,7 @@ class AdminDashboardController extends AbstractController
     }
 
     /**
-     * @Route("/ville", name="admin.ville.home")
+     * @Route("/villes", name="admin.ville.home")
      */
     public function homeVille(PaginatorInterface $paginator, Request $request, VillesRepository $villesRepository)
     {
@@ -45,7 +47,9 @@ class AdminDashboardController extends AbstractController
     }
 
     /**
-     * @Route("/ville/ajouter", name="admin.ville.add")
+     * @Route("/villes/ajouter", name="admin.ville.add")
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
     public function add(Request $request)
     {
@@ -68,10 +72,10 @@ class AdminDashboardController extends AbstractController
     }
 
    /**
-     * @Route("/ville/{id}", name="admin.ville.edit")
+     * @Route("/villes/{id}", name="admin.ville.edit")
      * @param Villes $villes
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function edit(Villes $villes, Request $request)
     {
@@ -94,10 +98,10 @@ class AdminDashboardController extends AbstractController
 
 
     /**
-     * @Route("/ville/delete", name="admin.ville")
+     * @Route("/villes/delete", name="admin.ville.delete")
      * @param Villes $villes
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function deleteVille(Villes $villes, Request $request)
     {
