@@ -1,19 +1,19 @@
-{{ form_start(form) }}
+<div class="container mt-5 mb-5 row">
 
-<div class="col-lg-12 col-md-6">
-    <div class="form-group">
-        {{ form_row(form.nomVille) }}
-    </div>
-</div>
-<div class="col-lg-12 col-md-6">
-    <div class="form-group">
-        {{ form_row(form.codePostal) }}
-    </div>
-</div>
+    {{ form_start(form) }}
 
-<div class="col-lg-12 col-md-6">
-    <p class="form-submit">
-        <button class="default-btn-one">Validé</button>
-    </p>
+    <div class="col-lg-6 col-md-6 mx-auto row">
+        <div class="form-group">
+            {{ form_widget(form) }}
+            <div class="col-lg-12 col-md-6">
+                <p class="form-group">
+                    <button class="btn btn-success">Valider</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+
+    {{ form_end(form) }}
 </div>
-{{ form_end(form) }}

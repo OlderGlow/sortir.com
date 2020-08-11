@@ -23,8 +23,8 @@ class Inscriptions
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Sorties", inversedBy="inscriptions")
-     * @ORM\JoinColumn(name="sortie_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Sorties", inversedBy="inscriptions", cascade={"remove"})
+     * @ORM\JoinColumn(name="sortie_id", referencedColumnName="id", nullable=false, onDelete="cascade")
      */
     private $sortie;
 

@@ -61,14 +61,14 @@ class Campus
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Participants", mappedBy="campus")
-     * @ORM\JoinColumn(name="Participants", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Participants", mappedBy="campus", cascade={"remove"})
+     * @ORM\JoinColumn(name="Participants", referencedColumnName="id", onDelete="cascade")
      */
     private $listParticipants;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Sorties", mappedBy="campus")
-     * @ORM\JoinColumn(name="Participants", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Sorties", mappedBy="campus", cascade={"remove"})
+     * @ORM\JoinColumn(name="Participants", referencedColumnName="id", onDelete="cascade")
      */
     private $listSorties;
 }
