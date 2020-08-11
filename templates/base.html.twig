@@ -3,6 +3,7 @@ Mise en place de la base de toutes nos pages en HTML5. Importation de Bootstrap,
 Mise en place de block que l'on pourra modifier selon nos différentes pages du projet. (Body, Title...)
 Import de nos includes. (Header, Footer...)
 -->
+{% set route_name = app.request.attributes.get('_route') %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,7 +12,7 @@ Import de nos includes. (Header, Footer...)
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <script src="https://kit.fontawesome.com/e5d90933bf.js" crossorigin="anonymous"></script>
-    <link rel="icon" href="{{ asset('img/favicon/favicon-32x32.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('img/others/favicon/favicon-32x32.png') }}" type="image/png">
     <title>{% block title %}Sortir.com{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
 </head>

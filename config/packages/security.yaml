@@ -21,16 +21,19 @@ security:
             anonymous: true
             provider: my_providers
             form_login:
-                login_path: security_login
-                check_path: security_login
-                default_target_path: home
+                login_path: user_login
+                check_path: user_login
+                default_target_path: /connexion
             logout:
-                path: security_logout
+                path: logout
                 target: /
             remember_me:
                 secret:   '%kernel.secret%'
                 lifetime: 3600 # 1 hour in seconds
                 path:     /
+            guard:
+                 authenticators:
+                     - App\Security\LoginAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -47,3 +50,4 @@ security:
         - { path: ^/lieux, roles: ROLE_ADMIN }
         - { path: ^/profil, roles: ROLE_USER }
         - { path: ^/sorties, roles: ROLE_USER }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
