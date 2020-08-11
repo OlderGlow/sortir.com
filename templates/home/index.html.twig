@@ -3,7 +3,19 @@
 {% block title %}{{ app.user.prenom }} {{ app.user.nom }} | Accueil {% endblock %}
 
 {% block body %}
-<div class="container border-left">
-    {{ "now"|date("d/m/Y") }}
+<div class="container">
+    <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4 text-right">Date du jour : {{ "now"|date("d/m/Y") }}
+    </div>
+</div>
+</div><div class="container">
+    <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4 text-right">Participant : {{ app.user.prenom }} {{ app.user.nom|first }}.
+    </div>
+</div>
 </div>
 {% endblock %}
