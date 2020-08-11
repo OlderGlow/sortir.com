@@ -3,5 +3,7 @@
 {% block title %}{{ app.user.prenom }} {{ app.user.nom }} | Accueil {% endblock %}
 
 {% block body %}
-
+<div class="container border-left">
+    {{ "now"|date("d/m/Y") }}
+</div>
 {% endblock %}
