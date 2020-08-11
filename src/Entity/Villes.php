@@ -36,7 +36,7 @@ class Villes
     private $codePostal;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Lieux", mappedBy="ville")
+     * @ORM\OneToMany(targetEntity="App\Entity\Lieux", mappedBy="ville", cascade={"remove"})
      */
     private $lieux ;
 

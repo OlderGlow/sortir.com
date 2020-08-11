@@ -1,8 +1,25 @@
+<div class="container-xl mt-5">
+    <div class="table-responsive col-lg-8 mx-auto">
+        <div class="table">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-12"><h2 class="text-center">Gestion des <b>villes</b></h2></div>
+
+
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped table-hover table-bordered mt-4" id="myTable2">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success col-lg-12">
+                    {{ message }}
+                </div>
+            {% endfor %}
 <thead class="thead-dark">
 <tr>
-    <th onclick="sortTable(0)">Ville</th>
-    <th onclick="sortTable(1)">Code Postal <i class="fa fa-sort"></i></th>
-    <th>Actions</th>
+    <th class="text-center" onclick="sortTable(0)">Ville</th>
+    <th class="text-center" onclick="sortTable(1)">Code Postal <i class="fa fa-sort"></i></th>
+    <th class="text-center">Actions</th>
 </tr>
 </thead>
 {% for ville in villes %}
@@ -45,3 +62,11 @@
         </div>
     </div>
 {% endfor %}
+        </table>
+        <a href="{{ path('admin.ville.add') }}" class="btn btn-primary">Ajoutez une idée</a>
+        <div class="center">
+            {{ knp_pagination_render(villes) }}
+        </div>
+    </div>
+</div>
+

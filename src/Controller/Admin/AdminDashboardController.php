@@ -65,7 +65,7 @@ class AdminDashboardController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($villes);
             $this->em->flush();
-            $this->addFlash('success', 'Crée avec succès');
+            $this->addFlash('success', 'La ville a été ajoutée avec succès.');
             return $this->redirectToRoute('admin.ville.home');
         }
 
@@ -89,7 +89,7 @@ class AdminDashboardController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $this->em->flush();
-            $this->addFlash('success', 'Bien modifié avec succès');
+            $this->addFlash('success', 'La ville a été éditée avec succès.');
             return $this->redirectToRoute('admin.ville.home');
         }
 
@@ -113,7 +113,7 @@ class AdminDashboardController extends AbstractController
         {
             $this->em->remove($villes);
             $this->em->flush();
-            $this->addFlash('success', 'Supprimer avec succès');
+            $this->addFlash('success', 'La ville a été supprimée avec succès.');
         }
 
         return $this->redirectToRoute('admin.ville.home');
@@ -164,7 +164,7 @@ class AdminDashboardController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->persist($campus);
             $this->em->flush();
-            $this->addFlash('success', 'Crée avec succès');
+            $this->addFlash('success', 'Le campus a été ajouté avec succès.');
             return $this->redirectToRoute('admin.campus.home');
         }
 
@@ -188,7 +188,7 @@ class AdminDashboardController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $this->em->flush();
-            $this->addFlash('success', 'Bien modifié avec succès');
+            $this->addFlash('success', 'Le campus a été édité avec succès.');
             return $this->redirectToRoute('admin.campus.home');
         }
 
@@ -212,7 +212,7 @@ class AdminDashboardController extends AbstractController
         {
             $this->em->remove($campus);
             $this->em->flush();
-            $this->addFlash('success', 'Supprimer avec succès');
+            $this->addFlash('success', 'Le campus a été supprimé avec succès.');
         }
 
         return $this->redirectToRoute('admin.campus.home');
@@ -263,7 +263,7 @@ class AdminDashboardController extends AbstractController
 
             $this->em->persist($participant);
             $this->em->flush();
-            $this->addFlash('success', 'Crée avec succès');
+            $this->addFlash('success', 'Le participant a été ajouté avec succès.');
             return $this->redirectToRoute('admin.participants.home');
         }
 
@@ -287,7 +287,7 @@ class AdminDashboardController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $this->em->flush();
-            $this->addFlash('success', 'Bien modifié avec succès');
+            $this->addFlash('success', 'Le participant a été édité avec succès.');
             return $this->redirectToRoute('admin.participants.home');
         }
 
@@ -311,7 +311,7 @@ class AdminDashboardController extends AbstractController
         {
             $this->em->remove($participants);
             $this->em->flush();
-            $this->addFlash('success', 'Supprimer avec succès');
+            $this->addFlash('success', 'Le participant a bien été supprimé.');
         }
 
         return $this->redirectToRoute('admin.participants.home');

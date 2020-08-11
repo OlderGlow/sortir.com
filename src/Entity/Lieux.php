@@ -50,8 +50,8 @@ class Lieux
     private $longitude;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Villes", inversedBy="lieux")
-     * @ORM\JoinColumn(name="Villes", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Villes", inversedBy="lieux", cascade={"remove"})
+     * @ORM\JoinColumn(name="Villes", referencedColumnName="id", onDelete="cascade")
      */
     private $ville;
 
