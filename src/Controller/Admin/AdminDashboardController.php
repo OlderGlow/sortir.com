@@ -37,9 +37,6 @@ class AdminDashboardController extends AbstractController
             $request->query->get('page', 1),
             5
         );
-        /*
-         * End modification profil
-         */
 
         return $this->render('admin_dashboard/index.html.twig', [
             'villes' => $villes,
