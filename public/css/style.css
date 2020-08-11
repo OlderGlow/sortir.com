@@ -445,3 +445,15 @@ a:hover {
         margin-bottom: 50px !important
     }
 }
+
+.couleur-btn{
+    color: white;
+    background: rgb(32,156,255);
+    background: linear-gradient(90deg, rgba(32,156,255,1) 0%, rgba(104,224,207,1) 100%);
+}
+
+.couleur-btn:hover{
+    color: black;
+    background: rgb(32,156,255);
+    background: linear-gradient(45deg, rgba(32,156,255,1) 0%, rgba(104,224,207,1) 100%);
+}

@@ -1,5 +1,5 @@
 <div class="container-xl mt-5">
-    <div class="table-responsive col-lg-8 mx-auto">
+    <div class="table-responsive col-lg-10 mx-auto">
         <div class="table">
             <div class="table-title">
                 <div class="row">
@@ -19,7 +19,8 @@
             <tr>
                 <th class="text-center" onclick="sortTable(0)">Pseudo</th>
                 <th class="text-center" onclick="sortTable(0)">Identité</th>
-                <th class="text-center" onclick="sortTable(0)">Rôle :</th>
+                <th class="text-center" onclick="sortTable(0)">Campus</th>
+                <th class="text-center" onclick="sortTable(0)">Rôle</th>
                 <th class="text-center">Actions</th>
             </tr>
             </thead>
@@ -28,7 +29,11 @@
                 <tr>
                     <td class="text-center">{{ part.pseudo }}</td>
                     <td class="text-center">{{ part.prenom }} {{ part.nom }}</td>
-                    <td class="text-center">{% for role in part.roles %} {{ role }}{% endfor %}</td>
+                    <td class="text-center">{{ part.campus.nomCampus }}</td>
+                    <td class="text-center">{% for role in part.roles %}
+                            {% if role == 'ROLE_ADMIN' %}Administrateur{% endif %}
+                            {% if role == 'ROLE_USER' %}Participant{% endif %}
+                        {% endfor %}</td>
                     <td class="text-center">
                         <a href="{{ path('admin.participant.edit', {'id': part.id}) }}" class="edit" title=""
                            data-toggle="tooltip" data-original-title="Edit">Modifier <i
