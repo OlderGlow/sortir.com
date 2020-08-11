@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Campus;
 use App\Entity\Participants;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,10 +20,11 @@ class ParticipantsType extends AbstractType
             ->add('telephone')
             ->add('mail')
             ->add('motDePasse')
-            ->add('roles')
             ->add('actif')
-            ->add('photo')
-            ->add('campus')
+            ->add('campus', EntityType::class, [
+                'class' => Campus::class,
+                'choice_label' => 'nom_campus'
+            ])
         ;
     }
 

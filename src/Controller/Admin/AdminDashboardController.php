@@ -16,6 +16,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AdminDashboardController extends AbstractController
 {
@@ -46,7 +47,8 @@ class AdminDashboardController extends AbstractController
 
         return $this->render('admin_dashboard/index.html.twig', [
             'villes' => $villes,
-            'user' => $user
+            'user' => $user,
+            'title' => 'Villes'
         ]);
     }
 
@@ -74,7 +76,7 @@ class AdminDashboardController extends AbstractController
     }
 
     /**
-     * @Route("/villes/{id}", name="admin.ville.edit")
+     * @Route("/villes/editer/{id}", name="admin.ville.edit")
      * @param Villes $villes
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -100,7 +102,7 @@ class AdminDashboardController extends AbstractController
 
 
     /**
-     * @Route("/villes/{id}", name="admin.ville.delete")
+     * @Route("/villes/{id}", name="admin.ville.delete", methods="DELETE")
      * @param Villes $villes
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -114,9 +116,7 @@ class AdminDashboardController extends AbstractController
             $this->addFlash('success', 'Supprimer avec succès');
         }
 
-        return $this->render('admin_dashboard/index.html.twig', [
-            'controller_name' => 'AdminDashboardController',
-        ]);
+        return $this->redirectToRoute('admin.ville.home');
     }
 
 
@@ -146,7 +146,8 @@ class AdminDashboardController extends AbstractController
 
         return $this->render('admin_dashboard/index.html.twig', [
             'campus' => $campus,
-            'user' => $user
+            'user' => $user,
+            'title' => 'Campus'
         ]);
     }
 
@@ -174,7 +175,7 @@ class AdminDashboardController extends AbstractController
     }
 
     /**
-     * @Route("/campus/{id}", name="admin.campus.edit")
+     * @Route("/campus/edit/{id}", name="admin.campus.edit")
      * @param Campus $campus
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -188,7 +189,7 @@ class AdminDashboardController extends AbstractController
         {
             $this->em->flush();
             $this->addFlash('success', 'Bien modifié avec succès');
-            return $this->redirectToRoute('admin.ville.home');
+            return $this->redirectToRoute('admin.campus.home');
         }
 
         return $this->render('admin_dashboard/edit.html.twig', [
@@ -200,7 +201,7 @@ class AdminDashboardController extends AbstractController
 
 
     /**
-     * @Route("/campus/{id}", name="admin.campus.delete")
+     * @Route("/campus/{id}", name="admin.campus.delete", methods="DELETE")
      * @param Campus $campus
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -214,9 +215,7 @@ class AdminDashboardController extends AbstractController
             $this->addFlash('success', 'Supprimer avec succès');
         }
 
-        return $this->render('admin_dashboard/index.html.twig', [
-            'controller_name' => 'AdminDashboardController',
-        ]);
+        return $this->redirectToRoute('admin.campus.home');
     }
 
     /*
@@ -239,14 +238,15 @@ class AdminDashboardController extends AbstractController
 
         return $this->render('admin_dashboard/index.html.twig', [
             'participants' => $participants,
-            'user' => $user
+            'user' => $user,
+            'title' => 'Participants'
         ]);
     }
 
     /**
      * @Route("/participant/ajouter", name="admin.participant.add")
      */
-    public function addParticipant(Request $request)
+    public function addParticipant(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $participant = new Participants();
 
@@ -254,6 +254,13 @@ class AdminDashboardController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $newpwd = $form->get('motDePasse')->getData();
+            $newEncodedPassword = $encoder->encodePassword($participant, $newpwd);
+            $participant->setPassword($newEncodedPassword);
+            $participant->setRoles(['ROLE_USER']);
+
+
             $this->em->persist($participant);
             $this->em->flush();
             $this->addFlash('success', 'Crée avec succès');
@@ -261,31 +268,31 @@ class AdminDashboardController extends AbstractController
         }
 
         return $this->render('admin_dashboard/add.html.twig', [
-            'campus' => $participant,
+            'participant' => $participant,
             'form' => $form->createView()
         ]);
     }
 
     /**
-     * @Route("/participant/{id}", name="admin.participant.edit")
-     * @param Campus $campus
+     * @Route("/participant/edit/{id}", name="admin.participant.edit")
+     * @param Participants $participants
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editParticipant(Campus $campus, Request $request)
+    public function editParticipant(Participants $participants, Request $request)
     {
-        $form = $this->createForm(CampusType::class, $campus);
+        $form = $this->createForm(ParticipantsType::class, $participants);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
             $this->em->flush();
             $this->addFlash('success', 'Bien modifié avec succès');
-            return $this->redirectToRoute('admin.ville.home');
+            return $this->redirectToRoute('admin.participants.home');
         }
 
         return $this->render('admin_dashboard/edit.html.twig', [
-            'campus' => $campus,
+            'participant' => $participants,
             'form' => $form->createView()
         ]);
     }
@@ -293,7 +300,7 @@ class AdminDashboardController extends AbstractController
 
 
     /**
-     * @Route("/participant/{id}", name="admin.participant.delete")
+     * @Route("/participant/{id}", name="admin.participant.delete", methods="DELETE")
      * @param Participants $participants
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -307,8 +314,6 @@ class AdminDashboardController extends AbstractController
             $this->addFlash('success', 'Supprimer avec succès');
         }
 
-        return $this->render('admin_dashboard/index.html.twig', [
-            'controller_name' => 'AdminDashboardController',
-        ]);
+        return $this->redirectToRoute('admin.participants.home');
     }
 }
