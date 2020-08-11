@@ -74,7 +74,7 @@ class AdminDashboardController extends AbstractController
     }
 
     /**
-     * @Route("/villes/{id}", name="admin.ville.edit")
+     * @Route("/villes/editer/{id}", name="admin.ville.edit")
      * @param Villes $villes
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -100,7 +100,7 @@ class AdminDashboardController extends AbstractController
 
 
     /**
-     * @Route("/villes/{id}", name="admin.ville.delete")
+     * @Route("/villes/{id}", name="admin.ville.delete", methods="DELETE")
      * @param Villes $villes
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -114,9 +114,7 @@ class AdminDashboardController extends AbstractController
             $this->addFlash('success', 'Supprimer avec succès');
         }
 
-        return $this->render('admin_dashboard/index.html.twig', [
-            'controller_name' => 'AdminDashboardController',
-        ]);
+        return $this->redirectToRoute('admin.ville.home');
     }
 
 
