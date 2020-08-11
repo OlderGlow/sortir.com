@@ -28,7 +28,7 @@
                 <tr>
                     <td class="text-center">{{ part.pseudo }}</td>
                     <td class="text-center">{{ part.prenom }} {{ part.nom }}</td>
-                    <td class="text-center">{{ part.roles }}</td>
+                    <td class="text-center">{% for role in part.roles %} {{ role }}{% endfor %}</td>
                     <td class="text-center">
                         <a href="{{ path('admin.participant.edit', {'id': part.id}) }}" class="edit" title=""
                            data-toggle="tooltip" data-original-title="Edit">Modifier <i
