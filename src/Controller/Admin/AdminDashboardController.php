@@ -33,7 +33,7 @@ class AdminDashboardController extends AbstractController
         $user = $this->getUser();
         // Affichage de la liste
         $villes = $paginator->paginate(
-            $this->$villesRepository->findJobOffer($user),
+            $villesRepository->findAll(),
             $request->query->get('page', 1),
             5
         );
@@ -121,6 +121,9 @@ class AdminDashboardController extends AbstractController
      * <------------------------SEPARATION PREMIERE ETAPE,
      *                                                      NE PAS REGARDER LA SUITE ---------------------------------->
      */
+
+
+
 
     /**
      * @Route("/campus", name="admin.campus")
