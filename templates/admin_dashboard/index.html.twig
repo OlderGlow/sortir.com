@@ -8,7 +8,7 @@
             <div class="table">
                 <div class="table-title">
                     <div class="row">
-                        <div class="col-sm-12"><h2 class="text-center">Gérer les <b>villes</b></h2></div>
+                        <div class="col-sm-12"><h2 class="text-center">Gérer les <b>{{ title }}</b></h2></div>
 
 
                     </div>
@@ -20,57 +20,38 @@
                         {{ message }}
                     </div>
                 {% endfor %}
-                <thead class="thead-dark">
-                <tr>
-                    <th onclick="sortTable(0)">Ville</th>
-                    <th onclick="sortTable(1)">Code Postal <i class="fa fa-sort"></i></th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                {% for ville in villes %}
-                    <tbody class="bg-white">
-                    <tr>
-                        <td class="text-center">{{ ville.nomville }}</td>
-                        <td class="text-center">{{ ville.codepostal }}</td>
-                        <td class="text-center">
-                            <a href="{{ path('admin.ville.edit', {'id': ville.id}) }}" class="edit" title=""
-                               data-toggle="tooltip" data-original-title="Edit">Modifier <i
-                                        class="fa fa-pencil-square-o"></i></a>
-                            <form method="POST" action="{{ path('admin.ville.delete', {id: ville.id}) }}"
-                                  style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr ?')">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ville.id) }}">
-                                <button class="border-0">- Supprimer <i class="fa fa-trash"></i></button>
-                            </form>
-                        </td>
 
-                    </tr>
-                    </tbody>
-                    <div class="modal" tabindex="-1" role="dialog">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Suppression</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Êtes vous sûr de vouloir supprimer cette ville ?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="#" data-id="#"
-                                       type="button" class="btn btn-primary" id="#confirmModalYes">Oui</a>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
+
+                {% if villes is defined %}
+                    {% include 'admin_dashboard/home/_villes.html.twig' %}
+                {% endif %}
+
+
+                {% if campus is defined %}
+                    {% include 'admin_dashboard/home/_campus.html.twig' %}
+                {% endif %}
+
+
+
+                {% if participants is defined %}
+                    {% include 'admin_dashboard/home/_participants.html.twig' %}
+                {% endif %}
+
+
             </table>
+            {% if villes is defined %}
             <a href="{{ path('admin.ville.add') }}" class="btn btn-primary">Ajoutez une ville</a>
+            {% endif %}
+            {% if campus is defined %}
+                <a href="{{ path('admin.campus.add') }}" class="btn btn-primary">Ajoutez un campus</a>
+            {% endif %}
+            {% if participants is defined %}
+                <a href="{{ path('admin.participant.add') }}" class="btn btn-primary">Ajoutez un participant</a>
+            {% endif %}
             <div class="center">
+                {% if villes is defined %}
                 {{ knp_pagination_render(villes) }}
+                {% endif %}
             </div>
         </div>
     </div>
