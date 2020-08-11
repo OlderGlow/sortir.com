@@ -1,5 +1,5 @@
 # Création du projet sortir.com pour ENI Ecole Informatique
-# Début du projet : 10/08/2020 à 12:00:00
+# Début du projet : 10/08/2020
 
 _Développé par :_
 - PELLE Dylan
@@ -27,12 +27,20 @@ _Commandes :_
 
 `symfony serve`
 
-# Fonctionnalités :
+# Fonctionnalités OK :
 
 - Login/Logout
+- Gestion des rôles
+- Pagination
 - Redirect to /connexion lorsque un anonyme arrive sur /
+- Partie administration pour villes, campus et participants
+- Date et nom sur accueil
+- Responsive (Mobile + Tablette)
 
-# Fonctionnalités :
+# @todo :
 
-- Login/Logout
-- Redirect to /connexion lorsque un anonyme arrive sur /
+- Ajax (Edit, Delete, Filter...)
+- Gestion des sorties
+- FileUploader photo (+ à afficher dans le header)
+- Filtres et recherche
+- Mot de passe oublié

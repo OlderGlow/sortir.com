@@ -31,8 +31,7 @@
                     <td class="text-center">{{ part.prenom }} {{ part.nom }}</td>
                     <td class="text-center">{{ part.campus.nomCampus }}</td>
                     <td class="text-center">{% for role in part.roles %}
-                            {% if role == 'ROLE_ADMIN' %}Administrateur{% endif %}
-                            {% if role == 'ROLE_USER' %}Participant{% endif %}
+                            {{ role | slice(5,10) | capitalize }}
                         {% endfor %}</td>
                     <td class="text-center">
                         <a href="{{ path('admin.participant.edit', {'id': part.id}) }}" class="edit" title=""
