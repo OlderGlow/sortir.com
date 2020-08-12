@@ -14,7 +14,9 @@ use App\Repository\VillesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -79,7 +81,7 @@ class AdminDashboardController extends AbstractController
      * @Route("/villes/editer/{id}", name="admin.ville.edit")
      * @param Villes $villes
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function editVille(Villes $villes, Request $request)
     {
@@ -105,7 +107,7 @@ class AdminDashboardController extends AbstractController
      * @Route("/villes/{id}", name="admin.ville.delete", methods="DELETE")
      * @param Villes $villes
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function deleteVille(Villes $villes, Request $request)
     {
@@ -178,7 +180,7 @@ class AdminDashboardController extends AbstractController
      * @Route("/campus/edit/{id}", name="admin.campus.edit")
      * @param Campus $campus
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function editCampus(Campus $campus, Request $request)
     {
@@ -204,7 +206,7 @@ class AdminDashboardController extends AbstractController
      * @Route("/campus/{id}", name="admin.campus.delete", methods="DELETE")
      * @param Campus $campus
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function deleteCampus(Campus $campus, Request $request)
     {
@@ -245,6 +247,9 @@ class AdminDashboardController extends AbstractController
 
     /**
      * @Route("/participant/ajouter", name="admin.participant.add")
+     * @param Request $request
+     * @param UserPasswordEncoderInterface $encoder
+     * @return RedirectResponse|Response
      */
     public function addParticipant(Request $request, UserPasswordEncoderInterface $encoder)
     {
@@ -277,7 +282,7 @@ class AdminDashboardController extends AbstractController
      * @Route("/participant/edit/{id}", name="admin.participant.edit")
      * @param Participants $participants
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function editParticipant(Participants $participants, Request $request)
     {
@@ -303,7 +308,7 @@ class AdminDashboardController extends AbstractController
      * @Route("/participant/{id}", name="admin.participant.delete", methods="DELETE")
      * @param Participants $participants
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function deleteParticipant(Participants $participants, Request $request)
     {
