@@ -34,7 +34,7 @@ class AdminDashboardController extends AbstractController
     }
 
     /**
-     * @Route("/villes", name="admin.ville.home")
+     * @Route("/admin/villes", name="admin.ville.home")
      */
     public function homeVille(PaginatorInterface $paginator, Request $request, VillesRepository $villesRepository)
     {
@@ -55,7 +55,7 @@ class AdminDashboardController extends AbstractController
     }
 
     /**
-     * @Route("/villes/ajouter", name="admin.ville.add")
+     * @Route("/admin/villes/ajouter", name="admin.ville.add")
      */
     public function addVille(Request $request)
     {
@@ -78,7 +78,7 @@ class AdminDashboardController extends AbstractController
     }
 
     /**
-     * @Route("/villes/editer/{id}", name="admin.ville.edit")
+     * @Route("/admin/villes/editer/{id}", name="admin.ville.edit")
      * @param Villes $villes
      * @param Request $request
      * @return Response
@@ -104,7 +104,7 @@ class AdminDashboardController extends AbstractController
 
 
     /**
-     * @Route("/villes/{id}", name="admin.ville.delete", methods="DELETE")
+     * @Route("/admin/villes/{id}", name="admin.ville.delete", methods="DELETE")
      * @param Villes $villes
      * @param Request $request
      * @return Response
@@ -133,7 +133,7 @@ class AdminDashboardController extends AbstractController
 
 
     /**
-     * @Route("/campus", name="admin.campus.home")
+     * @Route("/admin/campus", name="admin.campus.home")
      */
     public function homeCampus(PaginatorInterface $paginator, Request $request, CampusRepository $campusRepository)
     {
@@ -154,7 +154,7 @@ class AdminDashboardController extends AbstractController
     }
 
     /**
-     * @Route("/campus/ajouter", name="admin.campus.add")
+     * @Route("/admin/campus/ajouter", name="admin.campus.add")
      */
     public function addCampus(Request $request)
     {
@@ -177,7 +177,7 @@ class AdminDashboardController extends AbstractController
     }
 
     /**
-     * @Route("/campus/edit/{id}", name="admin.campus.edit")
+     * @Route("/admin/campus/edit/{id}", name="admin.campus.edit")
      * @param Campus $campus
      * @param Request $request
      * @return Response
@@ -203,7 +203,7 @@ class AdminDashboardController extends AbstractController
 
 
     /**
-     * @Route("/campus/{id}", name="admin.campus.delete", methods="DELETE")
+     * @Route("/admin/campus/{id}", name="admin.campus.delete", methods="DELETE")
      * @param Campus $campus
      * @param Request $request
      * @return Response
@@ -225,7 +225,7 @@ class AdminDashboardController extends AbstractController
      */
 
     /**
-     * @Route("/participants", name="admin.participants.home")
+     * @Route("/admin/participants", name="admin.participants.home")
      */
     public function homeParticipant(PaginatorInterface $paginator, Request $request, ParticipantsRepository $participantsRepository)
     {
@@ -246,7 +246,7 @@ class AdminDashboardController extends AbstractController
     }
 
     /**
-     * @Route("/participant/ajouter", name="admin.participant.add")
+     * @Route("/admin/participant/ajouter", name="admin.participant.add")
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
      * @return RedirectResponse|Response
@@ -279,7 +279,7 @@ class AdminDashboardController extends AbstractController
     }
 
     /**
-     * @Route("/participant/edit/{id}", name="admin.participant.edit")
+     * @Route("/admin/participant/edit/{id}", name="admin.participant.edit")
      * @param Participants $participants
      * @param Request $request
      * @return Response
@@ -305,7 +305,7 @@ class AdminDashboardController extends AbstractController
 
 
     /**
-     * @Route("/participant/{id}", name="admin.participant.delete", methods="DELETE")
+     * @Route("/admin/participant/{id}", name="admin.participant.delete", methods="DELETE")
      * @param Participants $participants
      * @param Request $request
      * @return Response

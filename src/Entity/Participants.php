@@ -272,6 +272,7 @@ class Participants implements UserInterface
         $roles[] = 'ROLE_USER';
         return array_unique($roles);
     }
+
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;

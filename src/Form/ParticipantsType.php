@@ -6,6 +6,7 @@ use App\Entity\Campus;
 use App\Entity\Participants;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,7 +19,7 @@ class ParticipantsType extends AbstractType
             ->add('nom')
             ->add('prenom')
             ->add('telephone')
-            ->add('mail')
+            ->add('mail', EmailType::class)
             ->add('motDePasse')
             ->add('actif')
             ->add('campus', EntityType::class, [
