@@ -7,6 +7,8 @@ use App\Entity\Participants;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -20,7 +22,18 @@ class ParticipantsType extends AbstractType
             ->add('prenom')
             ->add('telephone')
             ->add('mail', EmailType::class)
-            ->add('motDePasse')
+            ->add('motDePasse', RepeatedType::class, array(
+                'type' => PasswordType::class,
+                'first_options' => ['label' => 'Nouveau mot de passe'],
+                'second_options' => ['label' => 'Confirmer mot de passe'],
+                'invalid_message' => 'Les deux mots de passe doivent être identiques',
+                'options' => array(
+                    'attr' => array(
+                        'class' => 'password-field'
+                    )
+                ),
+                'required' => false,
+            ))
             ->add('actif')
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
