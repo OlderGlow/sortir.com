@@ -3,7 +3,28 @@
 {% block title %}Editer votre profil{% endblock %}
 
 {% block body %}
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
+    <div class="container">
+        <div class="py-5" style="height: 500px;">
+            <div class="mx-auto" style="width: 500px;">
+
+                {{ form_start(form) }}
+
+                <div class="col-lg-12 col-md-12 inline">
+                    <div class="form-group">
+                        {{ form_widget(form) }}
+
+                        <div class="mt-4 col-lg-12 col-md-6 mt-4">
+                            <p class="form-group">
+                                <button class="btn btn-success">Valider</button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+    </div>
 {% endblock %}

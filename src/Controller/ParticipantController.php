@@ -22,10 +22,10 @@ class ParticipantController extends AbstractController
     /**
      * @Route("/participant/monprofil/", name="participant.my.profil")
      * @param Request $request
-     * @param ObjectManager $manager
+     * @param $em
      * @return Response
      */
-    public function profileEdit(Request $request) : Response
+    public function profileEdit(Request $request, EntityManagerInterface $em) : Response
     {
         $user = $this->getUser();
 
