@@ -3,19 +3,67 @@
 {% block title %}{{ app.user.prenom }} {{ app.user.nom }} | Accueil {% endblock %}
 
 {% block body %}
-<div class="container">
-    <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4 text-right">Date du jour : {{ "now"|date("d/m/Y") }}
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4 text-right">Date du jour : {{ "now"|date("d/m/Y") }}
+            </div>
+        </div>
     </div>
-</div>
-</div><div class="container">
-    <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4 text-right">Participant : {{ app.user.prenom }} {{ app.user.nom|first }}.
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4 text-right">Participant : {{ app.user.prenom }} {{ app.user.nom|first }}.
+            </div>
+        </div>
     </div>
-</div>
-</div>
+
+    {# Affichage des sorties #}
+    <div class="container">
+        <thead class="thead-dark">
+        <tr>
+            <th class="text-center" onclick="sortTable(0)">Nom de la sortie</th>
+            <th class="text-center" onclick="sortTable(0)">Date de la sortie</th>
+            <th class="text-center" onclick="sortTable(0)">Clôture</th>
+            <th class="text-center" onclick="sortTable(0)">inscrit/places</th>
+            <th class="text-center" onclick="sortTable(0)">État</th>
+            <th class="text-center" onclick="sortTable(0)">Inscrit</th>
+            <th class="text-center" onclick="sortTable(0)">Organisateur</th>
+            <th class="text-center">Actions</th>
+        </tr>
+        </thead>
+
+        <tbody class="bg-white">
+        {% for sortie in sorties %}
+        <tr>
+            <td class="text-center">{{ sortie.nom }}</td>
+            <td class="text-center">{{ sortie.datedebut | date('dd/MM/yyyy') }}</td>
+            <td class="text-center">{{ sortie.datecloture | date('dd/MM/yyyy') }}</td>
+            <td class="text-center">{{ sortie.nbinscriptionsmax }}</td>
+{#        <td class="text-center">{{ sortie.etat.libelle }}</td>  VEFIFIER QUE ETAT SOIT BIEN UNE RELATION #}
+            <td class="text-center">{# USER INSCRIT #}</td>
+            <td class="text-center">{{ sortie.organisateur.participant }}</td>
+            <td class="text-center">{# Gerer les actions #} Actions </td>
+{#            <td class="text-center">#}
+{#                <a href="{{ path('admin.participant.edit', {'id': part.id}) }}" class="edit" title=""#}
+{#                   data-toggle="tooltip" data-original-title="Edit">Modifier <i#}
+{#                            class="fa fa-pencil-square-o"></i></a>#}
+{#                <form method="POST" action="{{ path('admin.participant.delete', {id: part.id}) }}"#}
+{#                      style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr ?')">#}
+{#                    <input type="hidden" name="_method" value="DELETE">#}
+{#                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ part.id) }}">#}
+{#                    <button class="border-0">- Supprimer <i class="fa fa-trash"></i></button>#}
+{#                </form>#}
+{#            </td>#}
+        </tr>
+        {% endfor %}
+        </tbody>
+
+
+    </div>
+
 {% endblock %}

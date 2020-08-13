@@ -39,6 +39,7 @@ _Commandes :_
 
 # @todo :
 
+-Rajouter table Etat avec relation OnetoMany
 - Ajax (Edit, Delete, Filter...)
 - Gestion des sorties
 - FileUploader photo (+ à afficher dans le header)
