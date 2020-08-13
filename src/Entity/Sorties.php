@@ -64,13 +64,6 @@ class Sorties
     private $descriptioninfos;
 
     /**
-     * @var String
-     *
-     * @ORM\Column(name="etat", type="string", nullable=false, length=500, columnDefinition="enum('En création', 'En cours', 'Ouvert', 'Fermé', 'Annulée')")
-     */
-    private $etatsortie;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Participants", inversedBy="listOrganisateurSorties")
      * @ORM\JoinColumn(name="organisateur", referencedColumnName="id")
      */
@@ -94,6 +87,11 @@ class Sorties
      */
     private $inscriptions;
 
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etats")
+     */
+    private $etats;
 
     /**
      * @return int
@@ -256,22 +254,6 @@ class Sorties
     }
 
     /**
-     * @return string
-     */
-    public function getEtatsortie(): ?string
-    {
-        return $this->etatsortie;
-    }
-
-    /**
-     * @param string $etatsortie
-     */
-    public function setEtatsortie(string $etatsortie): void
-    {
-        $this->etatsortie = $etatsortie;
-    }
-
-    /**
      * @return mixed
      */
     public function getInscriptions()
@@ -286,5 +268,23 @@ class Sorties
     {
         $this->inscriptions = $inscriptions;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getEtats()
+    {
+        return $this->etats;
+    }
+
+    /**
+     * @param mixed $etats
+     */
+    public function setEtats($etats): void
+    {
+        $this->etats = $etats;
+    }
+
+
 
 }
