@@ -37,12 +37,27 @@
                         <a href="{{ path('admin.participant.edit', {'id': part.id}) }}" class="edit" title=""
                            data-toggle="tooltip" data-original-title="Edit">Modifier <i
                                     class="fa fa-pencil-square-o"></i></a>
+
+
+
+
+
+
                         <form method="POST" action="{{ path('admin.participant.delete', {id: part.id}) }}"
                               style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr ?')">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ part.id) }}">
                             <button class="border-0">- Supprimer <i class="fa fa-trash"></i></button>
                         </form>
+
+
+
+
+
+
+
+
+
                     </td>
 
                 </tr>

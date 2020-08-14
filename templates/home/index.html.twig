@@ -1,69 +1,85 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}{{ app.user.prenom }} {{ app.user.nom }} | Accueil {% endblock %}
-
 {% block body %}
+<div class="container-xl mt-5">
+    <div class="table-responsive col-lg-8 mx-auto">
+        <div class="table">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-12"><h2 class="text-center">Gestion des <b>campus</b></h2></div>
 
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-4"></div>
-            <div class="col-md-4 text-right">Date du jour : {{ "now"|date("d/m/Y") }}
+                </div>
             </div>
         </div>
+        <table class="table table-striped table-hover table-bordered mt-4" id="myTable2">
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success col-lg-12">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            <thead class="thead-dark">
+            <tr>
+                <th class="text-center" onclick="sortTable(0)">Nom de la sortie</th>
+                <th class="text-center" onclick="sortTable(0)">Date de la sortie</th>
+                <th class="text-center" onclick="sortTable(0)">Clôture</th>
+                <th class="text-center" onclick="sortTable(0)">inscrit/places</th>
+                <th class="text-center" onclick="sortTable(0)">État</th>
+                <th class="text-center" onclick="sortTable(0)">Inscrit</th>
+                <th class="text-center" onclick="sortTable(0)">Organisateur</th>
+                <th class="text-center">Actions</th>
+            </tr>
+            </thead>
+            {% for sortie in sorties %}
+                <tbody class="bg-white">
+                <tr>
+                    <td class="text-center">{{ sortie.nom }}</td>
+                    <td class="text-center">{{ sortie.datedebut | date('dd/MM/yyyy') }}</td>
+                    <td class="text-center">{{ sortie.datecloture | date('dd/MM/yyyy') }}</td>
+                    <td class="text-center">{{ sortie.nbinscriptionsmax }}</td>
+                    {#        <td class="text-center">{{ sortie.etat.libelle }}</td>  VEFIFIER QUE ETAT SOIT BIEN UNE RELATION #}
+                    <td class="text-center">{# USER INSCRIT #}</td>
+                    <td class="text-center">{{ sortie.organisateur.pseudo }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('admin.campus.edit', {'id': sortie.id}) }}" class="edit" title=""
+                           data-toggle="tooltip" data-original-title="Edit">Modifier <i
+                                    class="fa fa-pencil-square-o"></i></a>
+                        <form method="POST" action="{{ path('admin.campus.delete', {id: sortie.id}) }}"
+                              style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ sortie.id) }}">
+                            <button class="border-0">- Supprimer <i class="fa fa-trash"></i></button>
+                        </form>
+                    </td>
+
+
+
+                </tr>
+                </tbody>
+                <div class="modal" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Suppression</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Êtes vous sûr de vouloir supprimer ce campus ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" data-id="#"
+                                   type="button" class="btn btn-primary" id="#confirmModalYes">Oui</a>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Non</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </table>
+
+        <a href="{{ path('admin.campus.add') }}" class="btn btn-primary">Ajoutez un campus</a>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4"></div>
-            <div class="col-md-4"></div>
-            <div class="col-md-4 text-right">Participant : {{ app.user.prenom }} {{ app.user.nom|first }}.
-            </div>
-        </div>
-    </div>
-
-    {# Affichage des sorties #}
-    <div class="container">
-        <thead class="thead-dark">
-        <tr>
-            <th class="text-center" onclick="sortTable(0)">Nom de la sortie</th>
-            <th class="text-center" onclick="sortTable(0)">Date de la sortie</th>
-            <th class="text-center" onclick="sortTable(0)">Clôture</th>
-            <th class="text-center" onclick="sortTable(0)">inscrit/places</th>
-            <th class="text-center" onclick="sortTable(0)">État</th>
-            <th class="text-center" onclick="sortTable(0)">Inscrit</th>
-            <th class="text-center" onclick="sortTable(0)">Organisateur</th>
-            <th class="text-center">Actions</th>
-        </tr>
-        </thead>
-
-        <tbody class="bg-white">
-        {% for sortie in sorties %}
-        <tr>
-            <td class="text-center">{{ sortie.nom }}</td>
-            <td class="text-center">{{ sortie.datedebut | date('dd/MM/yyyy') }}</td>
-            <td class="text-center">{{ sortie.datecloture | date('dd/MM/yyyy') }}</td>
-            <td class="text-center">{{ sortie.nbinscriptionsmax }}</td>
-{#        <td class="text-center">{{ sortie.etat.libelle }}</td>  VEFIFIER QUE ETAT SOIT BIEN UNE RELATION #}
-            <td class="text-center">{# USER INSCRIT #}</td>
-            <td class="text-center">{{ sortie.organisateur.participant }}</td>
-            <td class="text-center">{# Gerer les actions #} Actions </td>
-{#            <td class="text-center">#}
-{#                <a href="{{ path('admin.participant.edit', {'id': part.id}) }}" class="edit" title=""#}
-{#                   data-toggle="tooltip" data-original-title="Edit">Modifier <i#}
-{#                            class="fa fa-pencil-square-o"></i></a>#}
-{#                <form method="POST" action="{{ path('admin.participant.delete', {id: part.id}) }}"#}
-{#                      style="display: inline-block" onsubmit="return confirm('Êtes vous vraiment sûr ?')">#}
-{#                    <input type="hidden" name="_method" value="DELETE">#}
-{#                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ part.id) }}">#}
-{#                    <button class="border-0">- Supprimer <i class="fa fa-trash"></i></button>#}
-{#                </form>#}
-{#            </td>#}
-        </tr>
-        {% endfor %}
-        </tbody>
-
-
-    </div>
-
+</div>
 {% endblock %}

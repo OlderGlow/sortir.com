@@ -3,8 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Sorties;
+use App\Repository\ParticipantsRepository;
 use App\Repository\SortieRepository;
-use App\Repository\VillesRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -20,17 +20,20 @@ class HomeController extends AbstractController
      * @param SortieRepository $sortieRepository
      * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function index()
+    public function index(ParticipantsRepository $repository)
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('user_login');
         }
 
+        $participant = $repository->find($this->getUser());
+        dump($participant);
+
         // Récupération de la liste des sorties
         $sortieRepos = $this->getDoctrine()->getRepository(Sorties::class);
         $sortie = $sortieRepos->findAll();
         return $this->render('home/index.html.twig', [
-            "sorties"=>$sortie,
+            'sorties'=>$sortie,
         ]);
 
     }

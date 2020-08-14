@@ -122,9 +122,6 @@ class AdminDashboardController extends AbstractController
     }
 
 
-
-
-
     /*
      * <------------------------CAMPUS---------------------------------->
      */
@@ -284,13 +281,18 @@ class AdminDashboardController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function editParticipant(Participants $participants, Request $request)
+    public function editParticipant(Participants $participants, Request $request, UserPasswordEncoderInterface $encoder)
     {
+        $user = $this->getUser();
         $form = $this->createForm(ParticipantsType::class, $participants);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $newpwd = $form->get('motDePasse')['first']->getData();
+            $newEncodedPassword = $encoder->encodePassword($user, $newpwd);
+            $user->setPassword($newEncodedPassword);
+
             $this->em->flush();
             $this->addFlash('success', 'Le participant a été édité avec succès.');
             return $this->redirectToRoute('admin.participants.home');
