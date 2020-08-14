@@ -1,17 +1,19 @@
 <nav class="navbar navbar-dark navbar-expand-lg fixed-top portfolio-navbar transparent">
     <div class="container">
         <div class="img-test">
-        <a href="{{ path('home') }}"><img src="{{ asset('img/others/test logo.png') }}" class="logo"></a>
-        <a href="{{ path('home') }}"><img src="{{ asset('img/others/logo2.png') }}" class="logo2"></a>
+            <a href="{{ path('home') }}"><img src="{{ asset('img/others/test logo.png') }}" class="logo"></a>
+            <a href="{{ path('home') }}"><img src="{{ asset('img/others/logo2.png') }}" class="logo2"></a>
         </div>
-        <button data-toggle="collapse" class="navbar-toggler" data-target="#navbarNav"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <button data-toggle="collapse" class="navbar-toggler" data-target="#navbarNav"><span class="sr-only">Toggle navigation</span><span
+                    class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse"
              id="navbarNav">
             <ul class="nav navbar-nav ml-auto">
                 {% if is_granted('ROLE_ADMIN') %}
 
                     <div class="dropdown show">
-                        <a class="btn couleur-btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="btn couleur-btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Administration
                         </a>
 
@@ -25,7 +27,8 @@
                 {% endif %}
                 {% if is_granted('ROLE_USER') %}
                     <div class="dropdown show ml-4">
-                        <a class="btn dropdown-toggle ml-2 couleur-btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="btn dropdown-toggle ml-2 couleur-btn" href="#" role="button" id="dropdownMenuLink"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Menu
                         </a>
 

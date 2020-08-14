@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -93,9 +95,14 @@ class Participants implements UserInterface
     private $listOrganisateurSorties;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Inscriptions", mappedBy="participant")
+     * @ORM\ManyToMany(targetEntity=Sorties::class, mappedBy="estInscrit")
      */
-    private $inscriptions;
+    private $sorties;
+
+    public function __construct()
+    {
+        $this->sorties = new ArrayCollection();
+    }
 
     /**
      * Returns the password used to authenticate the user.
@@ -360,19 +367,33 @@ class Participants implements UserInterface
     }
 
     /**
-     * @return mixed
+     * @return Collection|Sorties[]
      */
-    public function getInscriptions()
+    public function getSorties(): Collection
     {
-        return $this->inscriptions;
+        return $this->sorties;
     }
 
-    /**
-     * @param mixed $inscriptions
-     */
-    public function setInscriptions($inscriptions): void
+    public function addSorty(Sorties $sorty): self
     {
-        $this->inscriptions = $inscriptions;
+        if (!$this->sorties->contains($sorty)) {
+            $this->sorties[] = $sorty;
+            $sorty->addEstInscrit($this);
+        }
+
+        return $this;
     }
+
+    public function removeSorty(Sorties $sorty): self
+    {
+        if ($this->sorties->contains($sorty)) {
+            $this->sorties->removeElement($sorty);
+            $sorty->removeEstInscrit($this);
+        }
+
+        return $this;
+    }
+
+
 
 }

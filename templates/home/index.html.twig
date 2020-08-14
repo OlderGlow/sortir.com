@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 <div class="container-xl mt-5">
-    <div class="table-responsive col-lg-8 mx-auto">
+    <div class="table-responsive col-lg-12 mx-auto">
         <div class="table">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-12"><h2 class="text-center">Gestion des <b>campus</b></h2></div>
+                    <div class="col-sm-12"><h2 class="text-center">Liste des <b>sorties</b></h2></div>
 
 
                 </div>
@@ -23,7 +23,7 @@
                 <th class="text-center" onclick="sortTable(0)">Nom de la sortie</th>
                 <th class="text-center" onclick="sortTable(0)">Date de la sortie</th>
                 <th class="text-center" onclick="sortTable(0)">Clôture</th>
-                <th class="text-center" onclick="sortTable(0)">inscrit/places</th>
+                <th class="text-center" onclick="sortTable(0)">Inscrit/Places</th>
                 <th class="text-center" onclick="sortTable(0)">État</th>
                 <th class="text-center" onclick="sortTable(0)">Inscrit</th>
                 <th class="text-center" onclick="sortTable(0)">Organisateur</th>
@@ -31,14 +31,15 @@
             </tr>
             </thead>
             {% for sortie in sorties %}
+
                 <tbody class="bg-white">
                 <tr>
                     <td class="text-center">{{ sortie.nom }}</td>
-                    <td class="text-center">{{ sortie.datedebut | date('dd/MM/yyyy') }}</td>
-                    <td class="text-center">{{ sortie.datecloture | date('dd/MM/yyyy') }}</td>
-                    <td class="text-center">{{ sortie.nbinscriptionsmax }}</td>
-                    {#        <td class="text-center">{{ sortie.etat.libelle }}</td>  VEFIFIER QUE ETAT SOIT BIEN UNE RELATION #}
-                    <td class="text-center">{# USER INSCRIT #}</td>
+                    <td class="text-center">{{ sortie.datedebut | date('d/m/Y') }}</td>
+                    <td class="text-center">{{ sortie.datecloture | date('d/m/Y') }}</td>
+                    <td class="text-center">{{ sortie.estInscrit|length }}/{{ sortie.nbinscriptionsmax }}</td>
+                    <td class="text-center">{{ sortie.etats.libelle }}</td>
+                    <td class="text-center">{% if sortie.estInscrit.first.id == app.user.id %}X{% endif %}</td>
                     <td class="text-center">{{ sortie.organisateur.pseudo }}</td>
                     <td class="text-center">
                         <a href="{{ path('admin.campus.edit', {'id': sortie.id}) }}" class="edit" title=""
@@ -79,7 +80,7 @@
             {% endfor %}
         </table>
 
-        <a href="{{ path('admin.campus.add') }}" class="btn btn-primary">Ajoutez un campus</a>
+        <a href="{{ path('admin.campus.add') }}" class="btn btn-primary">Ajoutez une sortie</a>
     </div>
 </div>
 {% endblock %}

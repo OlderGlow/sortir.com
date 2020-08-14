@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -83,15 +85,19 @@ class Sorties
     private $campus;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Inscriptions", mappedBy="sortie")
-     */
-    private $inscriptions;
-
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etats")
      */
     private $etats;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Participants::class, inversedBy="sorties")
+     */
+    private $estInscrit;
+
+    public function __construct()
+    {
+        $this->estInscrit = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -253,21 +259,6 @@ class Sorties
         $this->campus = $campus;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getInscriptions()
-    {
-        return $this->inscriptions;
-    }
-
-    /**
-     * @param mixed $inscriptions
-     */
-    public function setInscriptions($inscriptions): void
-    {
-        $this->inscriptions = $inscriptions;
-    }
 
     /**
      * @return mixed
@@ -283,6 +274,32 @@ class Sorties
     public function setEtats($etats): void
     {
         $this->etats = $etats;
+    }
+
+    /**
+     * @return Collection|Participants[]
+     */
+    public function getEstInscrit(): Collection
+    {
+        return $this->estInscrit;
+    }
+
+    public function addEstInscrit(Participants $estInscrit): self
+    {
+        if (!$this->estInscrit->contains($estInscrit)) {
+            $this->estInscrit[] = $estInscrit;
+        }
+
+        return $this;
+    }
+
+    public function removeEstInscrit(Participants $estInscrit): self
+    {
+        if ($this->estInscrit->contains($estInscrit)) {
+            $this->estInscrit->removeElement($estInscrit);
+        }
+
+        return $this;
     }
 
 

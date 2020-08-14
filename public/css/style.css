@@ -16,7 +16,6 @@ body {
     height:100%;
     position: relative;
     scroll-behavior: smooth;
-    background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
 }
 
 .navbar.transparent .navbar-inner {
@@ -24,9 +23,6 @@ body {
     -webkit-box-shadow: 0px 0px;
     box-shadow: 0px 0px;
     background-color: rgba(0,0,0,0.0);
-    background-image: -webkit-gradient(linear, 50.00% 0.00%, 50.00% 100.00%, color-stop( 0% , rgba(0,0,0,0.00)),color-stop( 100% , rgba(0,0,0,0.00)));
-    background-image: -webkit-linear-gradient(270deg,rgba(0,0,0,0.00) 0%,rgba(0,0,0,0.00) 100%);
-    background-image: linear-gradient(180deg,rgba(0,0,0,0.00) 0%,rgba(0,0,0,0.00) 100%);
 }
 
 
@@ -81,6 +77,7 @@ body {
 
 .site-footer
 {
+    margin-top: 60px;
     padding:45px 0 20px;
     font-size:15px;
     line-height:24px;
@@ -162,6 +159,9 @@ body {
 {
     .site-footer
     {
+        margin-top: auto;
+        z-index: 1999;
+        position: absolute;
         padding-bottom:0
     }
     .site-footer .copyright-text,.site-footer .social-icons
@@ -287,8 +287,8 @@ body {
     color: #000;
     overflow-x: hidden;
     height: 100%;
-    background-image: linear-gradient(to right, #D500F9, #FFD54F);
-    background-repeat: no-repeat
+    background-repeat: no-repeat;
+    background-color: #15202B;
 }
 
 input,
@@ -554,4 +554,8 @@ a:hover {
         transform: scale(0);
         opacity: 1;
     }
+}
+
+h1, h2, h3, h4, h5, h6, p, label{
+    color: white;
 }
