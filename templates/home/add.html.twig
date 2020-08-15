@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-5">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.nom) }}
+                {{ form_row(form.datedebut) }}
+                {{ form_row(form.datecloture) }}
+                {{ form_row(form.nbinscriptionsmax) }}
+                {{ form_row(form.duree) }}
+                {{ form_row(form.descriptioninfos) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.campus.nomCampus) }}
+                {{ form_row(form.lieu.nomLieu) }}
+                {{ form_row(form.lieu.rue) }}
+                {{ form_row(form.lieu.ville.codePostal) }}
+                {{ form_row(form.lieu.latitude) }}
+                {{ form_row(form.lieu.longitude) }}
+            </div>
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+            <button type="submit" class="btn btn-primary">Publier la sortie</button>
+            <button type="submit" class="btn btn-primary">Supprimer la sortie</button>
+            <button type="submit" class="btn btn-primary">Annulé</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
