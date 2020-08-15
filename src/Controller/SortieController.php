@@ -35,7 +35,7 @@ class SortieController extends AbstractController
      * @param ParticipantsRepository $repository
      * @return RedirectResponse|Response
      */
-    public function index(ParticipantsRepository $repository)
+    public function index(ParticipantsRepository $repository, SortieRepository $sortieRepository)
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('user_login');
@@ -43,10 +43,9 @@ class SortieController extends AbstractController
 
 
         // Récupération de la liste des sorties
-        $sortieRepos = $this->getDoctrine()->getRepository(Sorties::class);
-        $sortie = $sortieRepos->findAll();
+        $sortieRepos = $sortieRepository->findSearch();
         return $this->render('home/index.html.twig', [
-            'sorties'=>$sortie,
+            'sorties'=>$sortieRepos,
         ]);
 
     }
