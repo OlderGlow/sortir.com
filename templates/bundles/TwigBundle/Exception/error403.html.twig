@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Erreur 403{% endblock %}
+
+{% block body %}
+    <div class="error">
+        <div class="container" style="margin-top: 5rem;">
+            <div class="col-xs-12 ground-color text-center">
+                <div class="container-error-404" style="background-color: red;">
+                    <div class="clip">
+                        <div class="shadow"><span class="digit thirdDigit">4</span></div>
+                    </div>
+                    <div class="clip">
+                        <div class="shadow"><span class="digit secondDigit">0</span></div>
+                    </div>
+                    <div class="clip">
+                        <div class="shadow"><span class="digit firstDigit">3</span></div>
+                    </div>
+                </div>
+                <div class="mt-5"><h2 class="h1 mt-5">Désolé! La page est introuvable</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
