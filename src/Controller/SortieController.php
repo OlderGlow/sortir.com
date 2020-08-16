@@ -2,15 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Participants;
+use App\Data\SearchData;
 use App\Entity\Sorties;
-use App\Entity\Villes;
+use App\Form\SearchForm;
 use App\Form\SortieType;
-use App\Form\VillesType;
 use App\Repository\ParticipantsRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,23 +27,27 @@ class SortieController extends AbstractController
     {
         $this->em = $em;
     }
-
     /**
      * @Route("/", name="home")
      * @param ParticipantsRepository $repository
      * @return RedirectResponse|Response
      */
-    public function index(ParticipantsRepository $repository, SortieRepository $sortieRepository)
+    public function index(ParticipantsRepository $participantsRepository, SortieRepository $sortieRepository, Request $request)
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('user_login');
         }
 
+        $participant = $participantsRepository->find($this->getUser());
 
-        // Récupération de la liste des sorties
-        $sortieRepos = $sortieRepository->findSearch();
+        $data = new SearchData();
+        $form = $this->createForm(SearchForm::class, $data);
+        $form->handleRequest($request);
+
+        $sortieRepos = $sortieRepository->findSearch($data, $participant);
         return $this->render('home/index.html.twig', [
             'sorties'=>$sortieRepos,
+            'form' => $form->createView()
         ]);
 
     }
