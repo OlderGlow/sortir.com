@@ -53,18 +53,18 @@ class SortieRepository extends ServiceEntityRepository
         if($search->sortieInscrit == true){
             $query = $query
                 ->join('s.estInscrit', 'p')
-                ->addSelect('p')
-                ->andWhere('p.id = :val')
+                ->andWhere('s.id = :val')
                 ->setParameter('val', $participants);
         }
 
         if($search->noInscrit == true){
             $query = $query
-                ->join('s.estInscrit', 'p')
-                ->addSelect('p')
+                ->innerJoin('s.estInscrit', 'p')
                 ->andWhere('p.id != :val')
                 ->setParameter('val', $participants);
         }
+
+        //SELECT * FROM sorties AS s LEFT JOIN participant_sortie AS p ON s.id = p.sortie_id WHERE p.participant_id != 4
 
         if(!empty($search->dateStart)){
             $query = $query
