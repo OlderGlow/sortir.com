@@ -56,11 +56,12 @@ class SortieRepository extends ServiceEntityRepository
                 ->setParameter('val', $participants);
         }
 
-        if($search->noInscrit == true){
+       /* if($search->noInscrit == true){
             $query = $query
-                ->andWhere('p.id != :val')
+                ->leftJoin('p.sorties', 'x')
+                ->andWhere('x.id = :val')
                 ->setParameter('val', $participants);
-        }
+        } */
 
         //SELECT * FROM sorties AS s LEFT JOIN participant_sortie AS p ON s.id = p.sortie_id WHERE p.participant_id != 4
 
@@ -84,7 +85,18 @@ class SortieRepository extends ServiceEntityRepository
         }
 
 
-         return $query->getQuery()->getResult();
+         $resultats = $query->getQuery()->getResult();
 
+        if (!empty($search->noInscrit)) {
+            $resultatFiltres = [];
+            foreach ($resultats as $result) {
+                if (!$result->getEstInscrit()->contains($participants)) {
+                    $resultatFiltres[] = $result;
+                };
+            }
+            $resultats = $resultatFiltres;
+        }
+
+        return $resultats;
     }
 }
