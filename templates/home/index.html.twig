@@ -5,6 +5,28 @@
         <div class="table">
             <div class="table-title">
                 <div class="row">
+                    <div class="col-md-4">
+                        {{ form_start(form) }}
+                        {{ form_row(form.campus) }}
+                        {{ form_row(form.q) }}
+                        {{ form_row(form.dateStart) }}
+                        {{ form_row(form.dateEnd) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form_row(form.sortieOrganisateur) }}
+                        {{ form_row(form.sortieInscrit) }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form_row(form.noInscrit) }}
+                        {{ form_row(form.datePasse) }}
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary">Rechercher</button>
+                        <a href="{{ path('home') }}" class="btn btn-primary mt-5">Renitialisé</a>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-sm-12"><h2 class="text-center">Liste des <b>sorties</b></h2></div>
 
 

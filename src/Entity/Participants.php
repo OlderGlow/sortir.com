@@ -95,7 +95,15 @@ class Participants implements UserInterface
     private $listOrganisateurSorties;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Sorties::class, mappedBy="estInscrit")
+     * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity=Sorties::class, inversedBy="estInscrit", cascade={"persist"})
+     * @ORM\JoinTable(name="participant_sortie",
+     *     joinColumns={
+     *     @ORM\JoinColumn(name="participant_id", referencedColumnName="id")
+     *     },
+     *     inverseJoinColumns={@ORM\JoinColumn(name="sortie_id", referencedColumnName="id")
+     *      }
+     *    )
      */
     private $sorties;
 

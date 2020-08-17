@@ -90,7 +90,7 @@ class Sorties
     private $etats;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Participants::class, inversedBy="sorties")
+     * @ORM\ManyToMany(targetEntity=Participants::class, mappedBy="sorties")
      */
     private $estInscrit;
 
@@ -302,6 +302,10 @@ class Sorties
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->nom;
+    }
 
 
 }
