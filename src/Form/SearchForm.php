@@ -9,7 +9,7 @@ use App\Entity\Campus;
 use App\Entity\Sorties;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -46,21 +46,37 @@ class SearchForm extends AbstractType
                 'required' => false
             ])
 
-            ->add('sortieOrganisateur', CheckboxType::class,[
-                'label' => 'Sorties dont je suis l\'organisateur/trice',
-                'required' => false
+            ->add('sortieOrganisateur', ChoiceType::class,[
+                'expanded' => true,
+                'multiple' => true,
+                'label' => false,
+                'choices' => [
+                    'Sorties dont je suis l\'organisateur/trice' => true
+                ]
             ])
-            ->add('sortieInscrit', CheckboxType::class,[
-                'label' => 'Sorties auxquelles je suis inscrit/e',
-                'required' => false
+            ->add('sortieInscrit', ChoiceType::class,[
+                'expanded' => true,
+                'multiple' => true,
+                'label' => false,
+                'choices' => [
+                    'Sorties auxquelles je suis inscrit/e' => true
+                ]
             ])
-            ->add('noInscrit', CheckboxType::class,[
-                'label' => 'Sorties auxquelles je ne suis pas inscrit/e',
-                'required' => false
+            ->add('noInscrit', ChoiceType::class,[
+                'expanded' => true,
+                'multiple' => true,
+                'label' => false,
+                'choices' => [
+                    'Sorties auxquelles je ne suis pas inscrit/e' => true
+                ]
             ])
-            ->add('datePasse', CheckboxType::class,[
-                'label' => 'Sorties passées',
-                'required' => false
+            ->add('datePasse', ChoiceType::class,[
+                'expanded' => true,
+                'multiple' => true,
+                'label' => false,
+                'choices' => [
+                    'Sorties passées' => true
+                ]
             ])
         ;
     }

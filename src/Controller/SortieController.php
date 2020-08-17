@@ -38,7 +38,7 @@ class SortieController extends AbstractController
             return $this->redirectToRoute('user_login');
         }
 
-        $participant = $participantsRepository->find($this->getUser());
+        $participant = $this->getUser();
 
         $data = new SearchData();
         $form = $this->createForm(SearchForm::class, $data);

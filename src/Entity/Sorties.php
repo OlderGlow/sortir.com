@@ -90,7 +90,7 @@ class Sorties
     private $etats;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Participants::class, inversedBy="sorties")
+     * @ORM\ManyToMany(targetEntity=Participants::class, mappedBy="sorties")
      */
     private $estInscrit;
 

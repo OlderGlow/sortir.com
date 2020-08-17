@@ -7,6 +7,7 @@ use App\Entity\Participants;
 use App\Entity\Sorties;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method Sorties|null find($id, $lockMode = null, $lockVersion = null)
@@ -25,44 +26,44 @@ class SortieRepository extends ServiceEntityRepository
      *  Récupère les sorties en fonctions des recherches
      * @return Sorties[]
      */
-    public function findSearch(SearchData $search, Participants $participants): array
+    public function findSearch(SearchData $search, UserInterface $participants): array
     {
         $query = $this
-            ->createQueryBuilder('s')
-            ->leftJoin('s.estInscrit', 'p')
-            ->addSelect('p')
-            ->leftjoin('s.organisateur', 'o')
-            ->addSelect('o')
-            ->leftJoin('s.campus', 'c')
-            ->addSelect('c');
-
-            //->addOrderBy('s.dateHeureDebut');
+            ->createQueryBuilder('s');
 
         if(!empty($search->campus)){
             $query = $query
+                ->join('s.campus', 'c')
+                ->addSelect('c')
                 ->andWhere('c.id = :val')
                 ->setParameter('val', $search->campus);
         }
         if(!empty($search->q)){
             $query = $query
-                ->andWhere('p.nom LIKE :q')
+                ->andWhere('s.nom LIKE :q')
                 ->setParameter('q', "%{$search->q}%");
         }
-        if(!empty($search->sortieOrganisateur)){
+        if($search->sortieOrganisateur == true){
             $query = $query
+                ->join('s.organisateur', 'o')
+                ->addSelect('o')
                 ->andWhere('o.id = :val')
-                ->setParameter('val', $participants->getId());
+                ->setParameter('val', $participants);
         }
-        if(!empty($search->sortieInscrit)){
+        if($search->sortieInscrit == true){
             $query = $query
+                ->join('s.estInscrit', 'p')
+                ->addSelect('p')
                 ->andWhere('p.id = :val')
-                ->setParameter('val', $participants->getId());
+                ->setParameter('val', $participants);
         }
 
-        if(!empty($search->noInscrit)){
+        if($search->noInscrit == true){
             $query = $query
+                ->join('s.estInscrit', 'p')
+                ->addSelect('p')
                 ->andWhere('p.id != :val')
-                ->setParameter('val', $participants->getId());
+                ->setParameter('val', $participants);
         }
 
         if(!empty($search->dateStart)){
