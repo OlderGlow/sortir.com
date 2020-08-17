@@ -61,7 +61,14 @@
                     <td class="text-center">{{ sortie.datecloture | date('d/m/Y') }}</td>
                     <td class="text-center">{{ sortie.estInscrit|length }}/{{ sortie.nbinscriptionsmax }}</td>
                     <td class="text-center">{{ sortie.etats.libelle }}</td>
-                    <td class="text-center">{% if sortie.estInscrit.first.id is defined %}{% if sortie.estInscrit.first.id == app.user.id %}X{% endif %}{% endif %}</td>
+                    <td class="text-center">{% if sortie.estInscrit.first.id is defined %}
+
+                            {% for sortieInscrit in sortie.estInscrit %}
+                                {% if sortieInscrit.id == app.user.id %}X{% endif %}
+                            {% endfor %}
+                        {% endif %}
+
+                    </td>
                     <td class="text-center">{{ sortie.organisateur.pseudo }}</td>
                     <td class="text-center">
                         <a href="{{ path('admin.campus.edit', {'id': sortie.id}) }}" class="edit" title=""
