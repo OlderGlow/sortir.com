@@ -23,7 +23,7 @@ class SearchForm extends AbstractType
             ->add('campus', EntityType::class, [
                 'class' => Campus::class,
                 'choice_label' => 'nomCampus',
-                'label' => 'Campus',
+                'label' => false,
                 'placeholder' => 'Rechercher par Campus',
                 'required' => false
             ])
@@ -31,19 +31,21 @@ class SearchForm extends AbstractType
                 'label' => false,
                 'required' => false,
                 'attr' => [
-                    'placeholder' => 'Rechercher'
+                    'placeholder' => 'Rechercher par mots...'
                 ]
             ])
             ->add('dateStart', DateType::class, [
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
-                'required' => false
+                'required' => false,
+                'label' => false
             ])
 
             ->add('dateEnd', DateType::class, [
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
-                'required' => false
+                'required' => false,
+                'label' => false
             ])
 
             ->add('sortieOrganisateur', ChoiceType::class,[

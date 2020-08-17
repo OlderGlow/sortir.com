@@ -293,26 +293,12 @@ body {
     background-color: #15202B;
 }
 
-input,
-textarea {
-    background-color: #F3E5F5;
-    border-radius: 50px !important;
-    padding: 12px 15px 12px 15px !important;
-    width: 100%;
-    box-sizing: border-box;
-    border: none !important;
-    border: 1px solid #F3E5F5 !important;
-    font-size: 16px !important;
-    color: #000 !important;
-    font-weight: 400
-}
-
 input:focus,
 textarea:focus {
     -moz-box-shadow: none !important;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    border: 1px solid #D500F9 !important;
+    border: 1px solid #15202B !important;
     outline-width: 0;
     font-weight: 400
 }
@@ -560,4 +546,8 @@ a:hover {
 
 h1, h2, h3, h4, h5, h6, p, label{
     color: white;
+}
+
+.jumbotron label {
+ color: #1d2124;
 }
