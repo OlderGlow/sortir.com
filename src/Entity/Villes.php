@@ -104,5 +104,9 @@ class Villes
         $this->lieux = $lieux;
     }
 
+    public function __toString()
+    {
+        return $this->codePostal;
+    }
 
 }

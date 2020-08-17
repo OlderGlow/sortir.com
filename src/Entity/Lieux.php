@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Lieux
  *
  * @ORM\Table(name="lieux")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\LieuxRepository")
+ *
  */
 class Lieux
 {
@@ -50,7 +53,7 @@ class Lieux
     private $longitude;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Villes", inversedBy="lieux", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Villes", inversedBy="lieux", cascade={"remove", "persist"})
      * @ORM\JoinColumn(name="Villes", referencedColumnName="id", onDelete="cascade")
      */
     private $ville;
@@ -60,6 +63,11 @@ class Lieux
      * @ORM\JoinColumn(name="Sorties", referencedColumnName="id")
      */
     private $listSorties;
+
+    public function __construct()
+    {
+        $this->listSorties = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -157,7 +165,41 @@ class Lieux
         $this->ville = $ville;
     }
 
+    /**
+     * @return Collection|Sorties[]
+     */
+    public function getListSorties(): Collection
+    {
+        return $this->listSorties;
+    }
 
+    public function addListSorty(Sorties $listSorty): self
+    {
+        if (!$this->listSorties->contains($listSorty)) {
+            $this->listSorties[] = $listSorty;
+            $listSorty->setLieu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeListSorty(Sorties $listSorty): self
+    {
+        if ($this->listSorties->contains($listSorty)) {
+            $this->listSorties->removeElement($listSorty);
+            // set the owning side to null (unless already changed)
+            if ($listSorty->getLieu() === $this) {
+                $listSorty->setLieu(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getNomLieu();
+    }
 
 
 }

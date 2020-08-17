@@ -8,6 +8,7 @@ use App\Entity\Villes;
 use App\Form\CampusType;
 use App\Form\ParticipantsType;
 use App\Form\VillesType;
+use App\Form\VilleType;
 use App\Repository\CampusRepository;
 use App\Repository\ParticipantsRepository;
 use App\Repository\VillesRepository;
@@ -56,12 +57,14 @@ class AdminDashboardController extends AbstractController
 
     /**
      * @Route("/admin/villes/ajouter", name="admin.ville.add")
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
     public function addVille(Request $request)
     {
         $villes = new Villes();
 
-        $form = $this->createForm(VillesType::class, $villes);
+        $form = $this->createForm(VilleType::class, $villes);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -72,14 +72,14 @@ class Sorties
     private $organisateur;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Lieux", inversedBy="listSorties", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Lieux", inversedBy="listSorties", cascade={"remove", "persist"}, fetch="EAGER")
      * @ORM\JoinColumn(name="Lieux", referencedColumnName="id", onDelete="CASCADE")
      */
     private $lieu;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Campus", inversedBy="listSorties",)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Campus", inversedBy="listSorties", cascade={"remove", "persist"}, fetch="EAGER")
      * @ORM\JoinColumn(name="Campus", referencedColumnName="id")
      */
     private $campus;

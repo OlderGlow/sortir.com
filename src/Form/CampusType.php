@@ -17,7 +17,8 @@ class CampusType extends AbstractType
             ->add('nomCampus', EntityType::class, [
                 'class' => Campus::class,
                 'choice_label' => 'nomCampus',
-                'label' => 'Campus :'
+                'label' => 'Campus :',
+                'placeholder' => 'Choisissez votre campus...'
             ])
         ;
     }

@@ -18,16 +18,17 @@ class LieuxType extends AbstractType
             ->add('nomLieu', EntityType::class, [
                 'class' => Lieux::class,
                 'choice_label' => 'nomLieu',
-                'label' => 'Lieu :'
+                'label' => 'Lieu :',
+                'placeholder' => 'Choisissez votre lieu...'
             ])
             ->add('rue', TextType::class, [
-                'label' => 'Rue :'
+                'label' => 'Rue :',
             ])
             ->add('latitude', TextType::class, [
-                'label' => 'Latitude :'
+                'label' => 'Latitude :',
             ])
             ->add('longitude', TextType::class, [
-                'label' => 'Longitude :'
+                'label' => 'Longitude :',
             ])
             ->add('ville', VilleType::class)
         ;

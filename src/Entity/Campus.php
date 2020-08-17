@@ -71,4 +71,9 @@ class Campus
      * @ORM\JoinColumn(name="Participants", referencedColumnName="id", onDelete="cascade")
      */
     private $listSorties;
+
+    public function __toString()
+    {
+        return $this->getNomCampus();
+    }
 }

@@ -14,9 +14,11 @@ class VilleType extends AbstractType
     {
         $builder
             ->add('codePostal', TextType::class, [
-                'label' => 'Code postal :'
+                'label' => 'Code postal :',
             ])
-        ;
+            ->add('nomVille', TextType::class, [
+                'label' => 'Ville :'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -15,16 +15,75 @@
             <div class="col-md-6">
                 {{ form_row(form.campus.nomCampus) }}
                 {{ form_row(form.lieu.nomLieu) }}
+                <ul id="list-match" class="list-group" style="position: absolute; list-style: none; color: black;"></ul>
+                {{ form_row(form.lieu.ville.nomVille) }}
                 {{ form_row(form.lieu.rue) }}
                 {{ form_row(form.lieu.ville.codePostal) }}
                 {{ form_row(form.lieu.latitude) }}
                 {{ form_row(form.lieu.longitude) }}
             </div>
-            <button type="submit" class="btn btn-primary">Ajouter</button>
-            <button type="submit" class="btn btn-primary">Publier la sortie</button>
-            <button type="submit" class="btn btn-primary">Supprimer la sortie</button>
-            <button type="submit" class="btn btn-primary">Annulé</button>
+            <div class="mx-auto mt-5" style="margin-top: 3rem;">
+                <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
+                <button type="submit" class="btn btn-success mr-2">Publier la sortie</button>
+                <a href="{{ path('home') }}" class="btn btn-danger mr-2">Annuler</a>
+            </div>
         </div>
         {{ form_end(form) }}
     </div>
+
+        <script>
+            // Début du script JS  - Jquery
+            $(document).ready(function () {
+                // On récupère l'input ayant l'id nomLieu
+                $("#sortie_lieu_nomLieu").on('input', function () {
+                    $('#list-match').empty();
+                    let inputText = $("#sortie_lieu_nomLieu").val();
+                    console.log(inputText);
+                    let url = '{{ path("api_ajax_locations_like", {'lieuxApi': 'inputText'}) }}';
+                    url = url.replace("inputText", inputText);
+                    // Début du Ajax
+                    $.ajax({
+                        url: url,
+                        success: function (result) {
+                            console.log(result);
+                            result.forEach(el => $('#list-match').append(
+                                '<div style="margin-top: auto; cursor: pointer; width: 500px;">' +
+                                '<li class="list-group-item match col-lg-12 mb-1" id=' + el.id + '>' +
+                                '<p style="color: black; text-decoration: underline;">' + "Détail du lieu :" + '</p>' +
+                                '<p name = lieu style="color: black;">' + '<strong>' + el.name + '</strong>' + '</p>' +
+                                '<p style="color: black; display: inline;">' + "Ville : " + '</p>' +
+                                '<p name = ville style="color: black;">' + el.ville + '</p> ' +
+                                '<p style="color: black; display: inline;">' + "Rue : " + '</p>' +
+                                '<p name = street style="color: black;">' + el.street + '</p> ' +
+                                '<p style="color: black; display: inline;">' + "Code postal :" + '</p>' +
+                                '<p> <span name = zipCode style="color: black;">' + el.zipCode + '</span></p> ' +
+                                '<p style="color: black; display: inline;">' + "Latitude : " + '</p>' +
+                                '<p> <span name = lat style="color: black;">' + el.lat + '</span></p> ' +
+                                '<p style="color: black; display: inline;">' + "Longitude : " + '</p>' +
+                                '<p> <span name = long style="color: black;">' + el.long + '</span></p> ' +
+                                '</li>' +
+                                '</div>'
+                            ));
+                        }
+                    });
+                });
+                // On clique sur quel lieu exact on souhaite faire la sortie
+                $("#list-match").on('click', 'li', function () {
+                    let rue = $(this).find("p[name=street]").text();
+                    let ville = $(this).find("p[name=ville]").text();
+                    let lat = $(this).find("span[name=lat]").text();
+                    let long = $(this).find("span[name=long]").text();
+                    let codePostal = $(this).find("span[name=zipCode]").text();
+                    $('#list-match').empty();
+                    //On rempli le formulaire avec les champs récupéré en cliquant:
+                    $('#sortie_lieu_latitude').val(lat);
+                    $('#sortie_lieu_longitude').val(long);
+                    $('#sortie_lieu_rue').val(rue);
+                    $('#sortie_lieu_ville_codePostal').val(codePostal);
+                    $('#sortie_lieu_ville_nomVille').val(ville);
+                });
+
+            });
+        </script>
+
 {% endblock %}
