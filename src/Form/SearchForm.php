@@ -38,14 +38,14 @@ class SearchForm extends AbstractType
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
                 'required' => false,
-                'label' => false
+                'label' => 'Date de début'
             ])
 
             ->add('dateEnd', DateType::class, [
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
                 'required' => false,
-                'label' => false
+                'label' => 'Date de fin'
             ])
 
             ->add('sortieOrganisateur', ChoiceType::class,[
