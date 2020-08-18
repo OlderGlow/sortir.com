@@ -53,4 +53,33 @@ class ParticipantController extends AbstractController
             'form'=> $form->createView()
         ]);
     }
+
+    /**
+     * Fonction au clic sur le nom d'un participant qui affiche son profil
+     * @Route("/participant/detail/{id}", name="participant.detail")
+     * @param Participants $participants
+     * @return Response
+     */
+    public function detailParticipant(Participants $participants)
+    {
+        $user = $this->getUser();
+
+        /*
+         * SI l'id demandé est celui de l'utilisateur connecté on l'envoie vers la modification de son profil,
+         */
+        if ($user->getUsername() == $participants->getUsername()) {
+            return $this->redirectToRoute('participant.my.profil', [
+                'participant' => $participants,
+            ]);
+
+            /*
+             * Sinon on lui affiche les informations de cet utilisateur
+             */
+        } else {
+            return $this->render('participant/detail.html.twig', [
+                'participant' => $participants,
+            ]);
+        }
+    }
+
 }

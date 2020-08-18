@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editez votre profil{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="py-5" style="height: 500px;">
+            <div class="mx-auto" style="width: 500px;">
+
+                <div class="profil">
+                    <p class="infoDetailUser">Prénom <span class="center">{{ participant.prenom }}</span></p>
+                    <p class="infoDetailUser">Nom<span class="center">{{ participant.nom }}</span></p>
+                    <p class="infoDetailUser">Téléphone<span class="center">{{ participant.telephone }}</span></p>
+                    <p class="infoDetailUser">Email<span class="center">{{ participant.mail }}</span></p>
+                    <p class="infoDetailUser">Campus<span class="center">{{ participant.campus }}</span></p>
+                </div>
+
+                <div class="center">
+                    <a href="{{ path('home') }}">
+                        <button type="button" class="btn btn-primary"> Retour</button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

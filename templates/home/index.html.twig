@@ -103,7 +103,7 @@
                             {% endif %}
 
                         </td>
-                        <td class="text-center">{{ sortie.organisateur.pseudo }}</td>
+                        <td class="text-center"><a href="{{ path('participant.detail', {id: sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
                         <td class="text-center">
                             {% for sortieEtat in sortie.etats %}
                                 {% if sortieEtat.id == 1 %}
