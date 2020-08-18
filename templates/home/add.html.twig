@@ -23,8 +23,9 @@
                 {{ form_row(form.lieu.longitude) }}
             </div>
             <div class="mx-auto mt-5" style="margin-top: 3rem;">
-                <button type="submit" class="btn btn-primary mr-2">Enregistrer</button>
-                <button type="submit" class="btn btn-success mr-2">Publier la sortie</button>
+
+                {{ form_row(form.enregistree) }}
+                {{ form_row(form.publier) }}
                 <a href="{{ path('home') }}" class="btn btn-danger mr-2">Annuler</a>
             </div>
         </div>

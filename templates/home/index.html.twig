@@ -105,20 +105,13 @@
                         </td>
                         <td class="text-center">{{ sortie.organisateur.pseudo }}</td>
                         <td class="text-center">
-                            {% for sortieEtat in sortie.etats %}
-                                {% if sortieEtat.id == 1 %}
-                                    <a href="{{ path('home') }}">cc</a>
-                                {% elseif sortieEtat.id == 2 %}coc
-                                {% elseif sortieEtat.id == 3 %}coc
-                                {% elseif sortieEtat.id == 4 %}Afficher
-                                {% elseif sortieEtat.id == 5 %}coc
-                                {% elseif sortieEtat.id == 6 %}coc
-                                {% endif %}
-                            {% endfor %}
-
+                            {% if sortie.etats.libelle == 'Ouverte' %}Afficher - S'inscrire{% endif %}
+                            {% if sortie.etats.libelle == 'Créée' %}Modifier - Publier{% endif %}
+                            {% if sortie.etats.libelle == 'Clôturée' %}Afficher{% endif %}
+                            {% if sortie.etats.libelle == 'Activité en cours' %}Afficher{% endif %}
+                            {% if sortie.etats.libelle == 'Passée' %}Afficher {% endif %}
+                            {% if sortie.etats.libelle == 'Annulée' %}Modifier {% endif %}
                         </td>
-
-
                     </tr>
                     </tbody>
 
