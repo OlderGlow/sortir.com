@@ -7,14 +7,11 @@ use App\Form\ParticipantsType;
 use App\Form\PhotoType;
 use App\Repository\ParticipantsRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\Expr\Math;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\String\AbstractUnicodeString;
 
 class ParticipantController extends AbstractController
 {
@@ -89,11 +86,11 @@ class ParticipantController extends AbstractController
      * @Route("/participant/monprofil/maphoto", name="participant.my.detail.myphoto")
      * @param Request $request
      * @param EntityManagerInterface $em
-     * @param Participants $participants
+     * @param ParticipantsRepository $repos
      * @return Response
      * @throws \Exception
      */
-    public function photoEdit(Request $request, EntityManagerInterface $em)
+    public function photoEdit(Request $request, EntityManagerInterface $em, ParticipantsRepository $repos)
     {
         $user = $this->getUser();
         $form = $this->createForm(PhotoType::class);
@@ -107,16 +104,14 @@ class ParticipantController extends AbstractController
             $photo = $form->get('photo')->getData();
             if ($photo) {
                 /*
-                 * On modifie le nom du fichier pour avoir un nom unique random de type : Nom original + random + .extension
+                 * On modifie le nom du fichier pour avoir un nom unique de type : Nom original +  timstamp + .extension
                  */
                 $originalFilename = pathinfo($photo->getClientOriginalName(), PATHINFO_FILENAME);
                 $typeFichier = pathinfo($photo->getClientOriginalName(), PATHINFO_EXTENSION);
-                $random = '';
-                for ($i = 0; $i <= 10; $i++) {
-                    $r = (string)random_int(0, 999)*random_int(0, 999);
-                    $random = $random . $r;
-                }
-                $newFilename = $originalFilename . $random . '.' . $typeFichier;
+                $participant =$repos->find($user);
+                $date = new \DateTime();
+                $now = $date->getTimestamp();
+                $newFilename = $originalFilename . $now . $participant->getId(). '.' . $typeFichier;
 
                 // On déplace la photo dans le dossier indiqué en paramètre dans service.yaml
                 try {
