@@ -50,12 +50,13 @@ class SortieType extends AbstractType
             ])
             ->add('descriptioninfos', TextareaType::class, [
                 'label' => 'Description et infos :',
-                'required' => false
+                'required' => false,
+                'attr' => ['rows' => '5']
             ])
             ->add('lieu' , LieuxType::class)
             ->add('campus', CampusType::class)
-            ->add('enregistree', SubmitType::class, ['label' => 'Enregistrer'])
-            ->add('publier', SubmitType::class, ['label' => 'Publier'])
+            ->add('enregistree', SubmitType::class, ['label' => 'Enregistrer', 'attr' => ['class' => 'mr-3 btn btn-primary']])
+            ->add('publier', SubmitType::class, ['label' => 'Publier', 'attr' => ['class' => 'mr-3 btn btn-success']])
         ;
     }
 

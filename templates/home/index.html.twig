@@ -12,57 +12,55 @@
     </div>
     <!-- Début de l'affichage des filtres -->
     <div class="container">
-        <div class="col-lg-12">
-            <div class="row">
-                <a href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"
-                   data-toggle="collapse" class="col-sm-12" style="margin-bottom: 4rem;"><h4
-                            class="text-left">
-                        Filtrer les sorties <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                    </h4>
-                </a>
-
-
-            </div>
-        </div>
-
         <div class="collapse" id="collapseExample">
-        <div class="jumbotron">
-            <div class="col-lg-12">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div style="width: max-content">
-                            {{ form_start(form) }}
-                            {{ form_row(form.campus) }}
-                            {{ form_row(form.q) }}
-                            <div class="row">
-                                <div class="ml-3">{{ form_row(form.dateStart) }}</div>
-                                <div class="ml-3"> {{ form_row(form.dateEnd) }}</div>
+            <div class="jumbotron">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div style="width: max-content">
+                                {{ form_start(form) }}
+                                {{ form_row(form.campus) }}
+                                {{ form_row(form.q) }}
+                                <div class="row">
+                                    <div class="ml-3">{{ form_row(form.dateStart) }}</div>
+                                    <div class="ml-3"> {{ form_row(form.dateEnd) }}</div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-4">
+                        <div class="col-lg-4">
 
-                        {{ form_row(form.sortieOrganisateur) }}
-                        {{ form_row(form.sortieInscrit) }}
-                        {{ form_row(form.noInscrit) }}
-                        {{ form_row(form.datePasse) }}
+                            {{ form_row(form.sortieOrganisateur) }}
+                            {{ form_row(form.sortieInscrit) }}
+                            {{ form_row(form.noInscrit) }}
+                            {{ form_row(form.datePasse) }}
+                        </div>
+                        <div class="col-lg-2">
+                            <button type="submit" class="btn btn-primary">Rechercher</button>
+                        </div>
+                        {{ form_end(form) }}
                     </div>
-                    <div class="col-lg-2">
-                        <button type="submit" class="btn btn-primary">Rechercher</button>
-                    </div>
-                    {{ form_end(form) }}
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Début de l'affichage des sorties -->
+
+    <div class="container">
+        <div class="col-lg-12">
+            <div class="row">
+                <a href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"
+                   data-toggle="collapse" class="text-left"><h4
+                    >
+                        Filtrer les sorties <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                    </h4>
+                </a>
+                <h2 class="text-center" style="margin-left: 15rem;">Liste des <b>sorties</b>
+                </h2>
+            </div>
         </div>
     </div>
-    <!-- Début de l'affichage des sorties -->
-    <div class="row">
-        <div class="col-sm-12"><h2 class="text-center">Liste des <b>sorties</b></h2></div>
-
-
-    </div>
-    <div class="container-xl mt-5">
+    <div class="container-xl">
     <div class="table-responsive col-lg-12 mx-auto">
     <div class="table">
     <div class="table-title">
@@ -98,7 +96,9 @@
                             {% endif %}
 
                         </td>
-                        <td class="text-center"><a href="{{ path('participant.detail', {id: sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
+                        <td class="text-center"><a
+                                    href="{{ path('participant.detail', {id: sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                        </td>
                         <td class="text-center">
                             {% if sortie.etats.libelle == 'Ouverte' %}Afficher - S'inscrire{% endif %}
                             {% if sortie.etats.libelle == 'Créée' %}Modifier - Publier{% endif %}
@@ -113,7 +113,7 @@
                 {% endfor %}
             </table>
 
-            <a href="{{ path('sortie.add') }}" class="btn btn-primary">Ajoutez une sortie</a>
+            <a href="{{ path('sortie.add') }}" class="btn btn-primary">Ajouter une sortie</a>
         </div>
     </div>
 {% endblock %}
