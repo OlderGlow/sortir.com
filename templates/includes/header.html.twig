@@ -11,7 +11,7 @@
             <ul class="nav navbar-nav ml-auto">
                 {% if is_granted('ROLE_ADMIN') %}
 
-                    <div class="dropdown show">
+                    <div class="dropdown show mr-3">
                         <a class="btn couleur-btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Administration
@@ -26,8 +26,8 @@
 
                 {% endif %}
                 {% if is_granted('ROLE_USER') %}
-                    <div class="dropdown show ml-4">
-                        <a class="btn dropdown-toggle ml-2 couleur-btn" href="#" role="button" id="dropdownMenuLink"
+                    <div class="dropdown show mr-2">
+                        <a class="btn dropdown-toggle mr-2 couleur-btn" href="#" role="button" id="dropdownMenuLink"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Menu
                         </a>
@@ -43,14 +43,20 @@
 
             {% if app.user.photo is defined %}
                 {% if app.user.photo != null %}
-                    <div class="avatar">
+                    <div class="avatar" style="margin-left: 1rem;">
                         <img src="{{ asset('uploads/photoParticipants/') }}/{{ app.user.photo }}"
-                             alt="Photo de profil"/>
+                             class="imagecercle" alt="Photo de profil"/>
                     </div>
                 {% endif %}
             {% endif %}
 
-
         </div>
     </div>
 </nav>
+<div class="container">
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success col-lg-12">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>

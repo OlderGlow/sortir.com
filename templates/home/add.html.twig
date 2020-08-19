@@ -23,68 +23,73 @@
                 {{ form_row(form.lieu.longitude) }}
             </div>
             <div class="mx-auto mt-5" style="margin-top: 3rem;">
-
-                {{ form_row(form.enregistree) }}
-                {{ form_row(form.publier) }}
-                <a href="{{ path('home') }}" class="btn btn-danger mr-2">Annuler</a>
+                <div class="row">
+                    <div class="ml-3" style="margin-left: 1rem;">{{ form_row(form.enregistree) }}
+                    </div>
+                    {{ form_row(form.publier) }}
+                    <a href="{{ path('home') }}" class="btn btn-danger">Annuler</a>
+                </div>
             </div>
         </div>
         {{ form_end(form) }}
     </div>
 
-        <script>
-            // Début du script JS  - Jquery
-            $(document).ready(function () {
-                // On récupère l'input ayant l'id nomLieu
-                $("#sortie_lieu_ville_nomVille").on('input', function () {
-                    $('#list-match').empty();
-                    let inputText = $("#sortie_lieu_ville_nomVille").val();
-                    console.log(inputText);
-                    let url = '{{ path("api_ajax_locations_like", {'lieuxApi': 'inputText'}) }}';
-                    url = url.replace("inputText", inputText);
-                    // Début du Ajax
-                    $.ajax({
-                        url: url,
-                        success: function (result) {
-                            console.log(result);
-                            result.forEach(el => $('#list-match').append(
-                                '<div style="margin-top: auto; cursor: pointer; width: 500px;">' +
-                                '<li class="list-group-item match col-lg-12 mb-1" id=' + el.id + '>' +
-                                '<p style="color: black; text-decoration: underline;">' + "Nom du lieu :" + '</p>' +
-                                '<p name = lieu style="color: black;">' + '<strong>' + el.name + '</strong>' + '</p>' +
-                                '<p style="color: black; display: none;">' + "Ville : " + '</p>' +
-                                '<p name = ville style="color: black; display: none;">' + el.ville + '</p> ' +
-                                '<p style="color: black; display: none;">' + "Rue : " + '</p>' +
-                                '<p name = street style="color: black; display: none;">' + el.street + '</p> ' +
-                                '<p style="color: black; display: inline; display: none;">' + "Code postal :" + '</p>' +
-                                '<p> <span name = zipCode style="color: black; display: none;">' + el.zipCode + '</span></p> ' +
-                                '<p style="color: black; display: inline; display: none;">' + "Latitude : " + '</p>' +
-                                '<p> <span name = lat style="color: black; display: none;">' + el.lat + '</span></p> ' +
-                                '<p style="color: black; display: inline; display: none;">' + "Longitude : " + '</p>' +
-                                '<p> <span name = long style="color: black; display: none;">' + el.long + '</span></p> ' +
-                                '</li>' +
-                                '</div>'
-                            ));
-                        }
-                    });
+    <script>
+        // Début du script JS  - Jquery
+        $(document).ready(function () {
+            // On récupère l'input ayant l'id nomLieu
+            $("#sortie_lieu_ville_nomVille").on('input', function () {
+                $('#list-match').empty();
+                let inputText = $("#sortie_lieu_ville_nomVille").val();
+                console.log(inputText);
+                let url = '{{ path("api_ajax_locations_like", {'lieuxApi': 'inputText'}) }}';
+                url = url.replace("inputText", inputText);
+                // Début du Ajax
+                $.ajax({
+                    url: url,
+                    success: function (result) {
+                        console.log(result);
+                        result.forEach(el => $('#list-match').append(
+                            '<div style="margin-top: auto; cursor: pointer; width: 500px;">' +
+                            '<li class="list-group-item match col-lg-12 mb-1" id=' + el.id + '>' +
+                            '<p style="color: black; text-decoration: underline;">' + "Nom du lieu :" + '</p>' +
+                            '<p name = lieu style="color: black;">' + '<strong>' + el.name + '</strong>' + '</p>' +
+                            '<p style="color: black; text-decoration: underline; display: none">' + "ID :" + '</p>' +
+                            '<p name = enLieu style="color: black; display: none;">' + '<strong>' + el.id + '</strong>' + '</p>' +
+                            '<p style="color: black; display: none;">' + "Ville : " + '</p>' +
+                            '<p name = ville style="color: black; display: none;">' + el.ville + '</p> ' +
+                            '<p style="color: black; display: none;">' + "Rue : " + '</p>' +
+                            '<p name = street style="color: black; display: none;">' + el.street + '</p> ' +
+                            '<p style="color: black; display: inline; display: none;">' + "Code postal :" + '</p>' +
+                            '<p> <span name = zipCode style="color: black; display: none;">' + el.zipCode + '</span></p> ' +
+                            '<p style="color: black; display: inline; display: none;">' + "Latitude : " + '</p>' +
+                            '<p> <span name = lat style="color: black; display: none;">' + el.lat + '</span></p> ' +
+                            '<p style="color: black; display: inline; display: none;">' + "Longitude : " + '</p>' +
+                            '<p> <span name = long style="color: black; display: none;">' + el.long + '</span></p> ' +
+                            '</li>' +
+                            '</div>'
+                        ));
+                    }
                 });
-                // On clique sur quel lieu exact on souhaite faire la sortie
-                $("#list-match").on('click', 'li', function () {
-                    let rue = $(this).find("p[name=street]").text();
-                    let lieu = $(this).find("p[name=lieu]").text();
-                    let lat = $(this).find("span[name=lat]").text();
-                    let long = $(this).find("span[name=long]").text();
-                    let codePostal = $(this).find("span[name=zipCode]").text();
-                    $('#list-match').empty();
-                    //On rempli le formulaire avec les champs récupéré en cliquant:
-                    $('#sortie_lieu_latitude').val(lat);
-                    $('#sortie_lieu_longitude').val(long);
-                    $('#sortie_lieu_rue').val(rue);
-                    $('#sortie_lieu_ville_codePostal').val(codePostal);
-                    $('#sortie_lieu_nomLieu').html("<option value='" + lieu + "'>" + lieu + "</option>")
-                });
-
             });
-        </script>
+            // On clique sur quel lieu exact on souhaite faire la sortie
+            $("#list-match").on('click', 'li', function () {
+                let enlieu = $(this).find("p[name=enLieu]").text();
+                let rue = $(this).find("p[name=street]").text();
+                let lieu = $(this).find("p[name=lieu]").text();
+                let lat = $(this).find("span[name=lat]").text();
+                let long = $(this).find("span[name=long]").text();
+                let codePostal = $(this).find("span[name=zipCode]").text();
+                $('#list-match').empty();
+                //On rempli le formulaire avec les champs récupéré en cliquant:
+                $('#sortie_lieu_latitude').val(lat);
+                $('#sortie_lieu_longitude').val(long);
+                $('#sortie_lieu_rue').val(rue);
+                $('#sortie_lieu_ville_codePostal').val(codePostal);
+                $('#sortie_lieu_nomLieu').html("<option value='" + enlieu + "'>" + lieu + "</option>")
+            });
+
+        });
+    </script>
 
 {% endblock %}

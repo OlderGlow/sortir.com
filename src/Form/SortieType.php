@@ -54,7 +54,7 @@ class SortieType extends AbstractType
             ])
             ->add('lieu' , LieuxType::class)
             ->add('campus', CampusType::class)
-            ->add('enregistree', SubmitType::class, ['label' => 'Enregistrée'])
+            ->add('enregistree', SubmitType::class, ['label' => 'Enregistrer'])
             ->add('publier', SubmitType::class, ['label' => 'Publier'])
         ;
     }
