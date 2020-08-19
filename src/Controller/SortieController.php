@@ -35,9 +35,12 @@ class SortieController extends AbstractController
         $this->em = $em;
         $this->etatsRepository = $etatsRepository;
     }
+
     /**
      * @Route("/", name="home")
-     * @param ParticipantsRepository $repository
+     * @param ParticipantsRepository $participantsRepository
+     * @param SortieRepository $sortieRepository
+     * @param Request $request
      * @return RedirectResponse|Response
      */
     public function index(ParticipantsRepository $participantsRepository, SortieRepository $sortieRepository, Request $request)

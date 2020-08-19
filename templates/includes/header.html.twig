@@ -41,11 +41,11 @@
                 {% endif %}
             </ul>
 
-{#            {% if app.user.photo is defined %}#}
-{#                <div class="photo-profil">#}
-{#                    <img src="/public/images/images/photo_profil/{{ app.user.photo }}" alt="Photo de profil"/>#}
-{#                </div>#}
-{#            {% endif %}#}
+            {% if app.user.photo != null %}
+                <div class="avatar" >
+                    <img src="{{ asset('uploads/photoParticipants/') }}/{{ app.user.photo }}" alt="Photo de profil"/>
+                </div>
+            {% endif %}
 
 
         </div>

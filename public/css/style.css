@@ -551,3 +551,12 @@ h1, h2, h3, h4, h5, h6, p, label{
 .jumbotron label {
  color: #1d2124;
 }
+
+.avatar {
+    overflow:hidden;
+    -webkit-border-radius:50px;
+    -moz-border-radius:50px;
+    border-radius:50px;
+    width:90px;
+    height:90px;
+}

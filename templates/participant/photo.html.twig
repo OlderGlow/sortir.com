@@ -1,11 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editer votre profil{% endblock %}
+{% block title %}Insérez votre photo de profil !{% endblock %}
 
 {% block body %}
     <div class="container">
         <div class="py-5" style="height: 500px;">
             <div class="mx-auto" style="width: 500px;">
+
+                {% if app.user.photo != null %}
+                    <div class="photo-actuelle">
+                        <h2>Photo actuelle :</h2>
+
+                        <div class="avatar">
+                            <img src="{{ asset('uploads/photoParticipants/') }}/{{ app.user.photo }}" alt="Photo de profil"/>
+                        </div>
+                    </div>
+
+                {% endif %}
 
                 {{ form_start(form) }}
 
@@ -22,19 +33,12 @@
                 </div>
             </div>
 
-
             {{ form_end(form) }}
+
             <div class="center">
-
-                <a href="{{ path('participant.my.detail.myphoto') }}">
-                    <button type="button" class="btn btn-primary">Photo de profil</button>
-                </a>
-
-                <a href="{{ path('home') }}">
+                <a href="{{ path('participant.my.profil') }}">
                     <button type="button" class="btn btn-primary"> Retour</button>
                 </a>
-
-
             </div>
         </div>
 
