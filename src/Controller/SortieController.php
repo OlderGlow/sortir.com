@@ -93,6 +93,7 @@ class SortieController extends AbstractController
 
             $sortie->setOrganisateur($this->getUser());
 
+
             $nextAction = $form->get('publier')->isClicked()
                 ?
                 $this->etatsRepository->findOneBy(['libelle' => 'Ouverte'])
