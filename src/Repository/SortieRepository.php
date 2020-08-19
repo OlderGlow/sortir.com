@@ -80,6 +80,8 @@ class SortieRepository extends ServiceEntityRepository
 
         if(!empty($search->datePasse)){
             $query = $query
+                ->join('s.etats', 'e')
+                ->addSelect('e')
                 ->andWhere('e.libelle = :val')
                 ->setParameter('val', 'Passée');
         }

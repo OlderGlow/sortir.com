@@ -68,13 +68,28 @@ class SortieController extends AbstractController
     public function add(Request $request)
     {
         $sortie = new Sorties();
-        $etat = $this->etatsRepository->find(1);
+
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $sortie->setOrganisateur($this->getUser());
-            $sortie->setEtats($etat);
+
+            $nextAction = $form->get('publier')->isClicked()
+                ?
+                $this->etatsRepository->findOneBy(['libelle' => 'Ouverte'])
+                :
+                $this->etatsRepository->findOneBy(['libelle' => 'Créée']);
+
+
+            $sortie->setEtats($nextAction);
+
+            $lieu = $form->get('lieu')['nomLieu']->getData();
+            $campus = $form->get('campus')['nomCampus']->getData();
+            $sortie->setLieu($lieu);
+            $sortie->setCampus($campus);
+
             $this->em->persist($sortie);
             $this->em->flush();
             $this->addFlash('success', 'La sortie a été ajoutée avec succès.');
