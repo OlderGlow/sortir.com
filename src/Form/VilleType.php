@@ -22,6 +22,7 @@ class VilleType extends AbstractType
                 'choice_label' => 'nomVille',
                 'label' => 'Ville :',
                 'required' => true,
+                'placeholder' => 'Choisissez votre ville...'
             ])
         ;
     }
