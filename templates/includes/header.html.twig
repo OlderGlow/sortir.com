@@ -44,7 +44,7 @@
             {% if app.user.photo is defined %}
                 {% if app.user.photo != null %}
                     <div class="avatar" style="margin-left: 1rem;">
-                        <img src="{{ asset('uploads/photoParticipants/') }}/{{ app.user.photo }}"
+                        <img src="{{ asset('uploads/photoParticipants') }}/{{ app.user.photo }}"
                              class="imagecercle" alt="Photo de profil"/>
                     </div>
                 {% endif %}
@@ -56,6 +56,11 @@
 <div class="container">
     {% for message in app.flashes('success') %}
         <div class="alert alert-success col-lg-12">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="alert alert-danger col-lg-12">
             {{ message }}
         </div>
     {% endfor %}

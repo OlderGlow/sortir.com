@@ -57,7 +57,7 @@ class SortieController extends AbstractController
 
         $sortieRepos = $sortieRepository->findSearch($data, $participant);
         return $this->render('home/index.html.twig', [
-            'sorties'=>$sortieRepos,
+            'sorties' => $sortieRepos,
             'form' => $form->createView()
         ]);
 
@@ -70,12 +70,26 @@ class SortieController extends AbstractController
      */
     public function add(Request $request)
     {
+        $now = new \DateTime('now');
+        $now->modify('+1 hour');
         $sortie = new Sorties();
+        $sortie->setDatedebut($now);
+        $sortie->setDatecloture($now);
 
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Si les dates sont antérieur a maintenant on redirige avec erreur
+            if ($sortie->getDatedebut() < $now && $sortie->getDatecloture() < $now ) {
+                $this->addFlash('error', 'Merci de saisir une date futur !');
+                return $this->redirectToRoute('sortie.add');
+            }
+            // si la date de cloture est suppérieur a la date de début on redirige avec erreur
+            if ($sortie->getDatecloture() > $sortie->getDatedebut()) {
+                $this->addFlash('error', 'Merci de saisir une date de clôture supérieure a la date de début !');
+                return $this->redirectToRoute('sortie.add');
+            }
 
             $sortie->setOrganisateur($this->getUser());
 
@@ -84,7 +98,6 @@ class SortieController extends AbstractController
                 $this->etatsRepository->findOneBy(['libelle' => 'Ouverte'])
                 :
                 $this->etatsRepository->findOneBy(['libelle' => 'Créée']);
-
 
             $sortie->setEtats($nextAction);
 
@@ -122,12 +135,12 @@ class SortieController extends AbstractController
 
         $response = array();
 
-        for($i = 0 ; $i !== count($locationsMatching); $i++){
-            $jsonLocation = array (
+        for ($i = 0; $i !== count($locationsMatching); $i++) {
+            $jsonLocation = array(
                 'id' => $locationsMatching[$i]->getId(),
                 'name' => $locationsMatching[$i]->getNomLieu(),
                 'ville' => $locationsMatching[$i]->getVille()->getNomVille(),
-                'street' =>  $locationsMatching[$i]->getRue(),
+                'street' => $locationsMatching[$i]->getRue(),
                 'lat' => $locationsMatching[$i]->getLatitude(),
                 'long' => $locationsMatching[$i]->getLongitude(),
                 'zipCode' => $locationsMatching[$i]->getVille()->getCodePostal()
@@ -135,6 +148,6 @@ class SortieController extends AbstractController
             $response[] = $jsonLocation;
         }
 
-        return new JsonResponse( $response );
+        return new JsonResponse($response);
     }
 }

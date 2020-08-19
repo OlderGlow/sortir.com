@@ -9,6 +9,7 @@ use App\Entity\Participants;
 use App\Entity\Sorties;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -21,6 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SortieType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -28,11 +30,11 @@ class SortieType extends AbstractType
                 'label' => 'Nom de la sortie :',
                 'required' => true,
             ])
-            ->add('datedebut', DateType::class, [
+            ->add('datedebut', DateTimeType::class, [
                 'label' => 'Date et heure de la sortie :',
                 'widget' => 'single_text',
                 'required' => true,
-                'format' => 'yyyy-MM-dd',
+
             ])
             ->add('datecloture', DateType::class, [
                 'widget' => 'single_text',
@@ -58,6 +60,7 @@ class SortieType extends AbstractType
             ->add('enregistree', SubmitType::class, ['label' => 'Enregistrer', 'attr' => ['class' => 'mr-3 btn btn-primary']])
             ->add('publier', SubmitType::class, ['label' => 'Publier', 'attr' => ['class' => 'mr-3 btn btn-success']])
         ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
