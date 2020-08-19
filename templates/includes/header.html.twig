@@ -41,10 +41,13 @@
                 {% endif %}
             </ul>
 
-            {% if app.user.photo != null %}
-                <div class="avatar" >
-                    <img src="{{ asset('uploads/photoParticipants/') }}/{{ app.user.photo }}" alt="Photo de profil"/>
-                </div>
+            {% if app.user.photo is defined %}
+                {% if app.user.photo != null %}
+                    <div class="avatar">
+                        <img src="{{ asset('uploads/photoParticipants/') }}/{{ app.user.photo }}"
+                             alt="Photo de profil"/>
+                    </div>
+                {% endif %}
             {% endif %}
 
 

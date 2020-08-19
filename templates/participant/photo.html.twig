@@ -7,15 +7,17 @@
         <div class="py-5" style="height: 500px;">
             <div class="mx-auto" style="width: 500px;">
 
-                {% if app.user.photo != null %}
-                    <div class="photo-actuelle">
-                        <h2>Photo actuelle :</h2>
+                {% if app.user.photo is defined %}
+                    {% if app.user.photo != null %}
+                        <div class="photo-actuelle">
+                            <h2>Photo actuelle :</h2>
 
-                        <div class="avatar">
-                            <img src="{{ asset('uploads/photoParticipants/') }}/{{ app.user.photo }}" alt="Photo de profil"/>
+                            <div class="avatar">
+                                <img src="{{ asset('uploads/photoParticipants/') }}/{{ app.user.photo }}"
+                                     alt="Photo de profil"/>
+                            </div>
                         </div>
-                    </div>
-
+                    {% endif %}
                 {% endif %}
 
                 {{ form_start(form) }}
