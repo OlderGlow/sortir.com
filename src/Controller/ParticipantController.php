@@ -32,9 +32,7 @@ class ParticipantController extends AbstractController
     public function profileEdit(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encoder)
     {
         $user = $this->getUser();
-
         $form = $this->createForm(ParticipantsType::class, $user);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -97,7 +95,6 @@ class ParticipantController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             /*
              * Si il y a une photo
              */
@@ -124,13 +121,12 @@ class ParticipantController extends AbstractController
                     return $this->redirectToRoute('participant.my.profil');
                 }
 
-                // on inscrit le nom du fichier dans le participant
+                // on inscrit le nom de la photo dans le participant
                 $user->setPhoto($newFilename);
             }
 
             $em->persist($user);
             $em->flush();
-
             $this->addFlash('success', "Image enregistrée !");
             return $this->redirectToRoute('participant.my.profil');
         }
