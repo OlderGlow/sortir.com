@@ -1,35 +1,60 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="container">
-        <div class="col-lg-12">
-            <div class="row">
-                <div class="col-lg-6">
-                    <p>Nom de la sortie : {{ sortieId.nom }}</p>
-                    <p>Date de début : {{ sortieId.datedebut|date('d/m/y - H:i') }} </p>
-                    <p>Date de fin d'inscription : {{ sortieId.datecloture |date('d/m/y') }} </p>
-                    <p>Nombre d'inscriptions max : {{ sortieId.nbinscriptionsmax }} </p>
-                    <p>Durée : {{ sortieId.duree }}</p>
-                    {% if form is not defined %}
+
+    {# Affichage de la sortie #}
+    <div style="margin-left: 20%">
+    <div class="container" style="margin-top: 5rem;">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <p>Nom de la sortie : {{ sortieId.nom }}</p>
+                <p>Date de début : {{ sortieId.datedebut|date('d/m/y - H:i') }} </p>
+                <p>Date de fin d'inscription : {{ sortieId.datecloture |date('d/m/y') }} </p>
+                <p>Nombre d'inscriptions max : {{ sortieId.nbinscriptionsmax }} </p>
+                <p>Durée : {{ sortieId.duree }}</p>
+                {% if form is not defined %}
                     <p>Description : {{ sortieId.descriptioninfos }}</p>
-                    {% endif %}
-                </div>
-                <div class="col-lg-6">
-                    <p>Campus : {{ sortieId.campus.nomCampus }}</p>
-                    <p>Lieu : {{ sortieId.lieu.nomLieu }}</p>
-                    <p>Rue : {{ sortieId.lieu.rue }}</p>
-                    <p>Code postal : {{ sortieId.lieu.ville.codePostal }}</p>
-                    <p>Latitude : {{ sortieId.lieu.latitude }}</p>
-                    <p>Longitude : {{ sortieId.lieu.longitude }}</p>
-                </div>
+                {% endif %}
             </div>
-            {% if form is defined %}
-                {{ form_start(form) }}
-                {{ form_row(form.descriptioninfos) }}
-                <button type="submit" class="btn btn-primary">Annulé</button>
-                {{ form_end(form) }}
-            {% endif %}
+            <div class="col-lg-6">
+                <p>Campus : {{ sortieId.campus.nomCampus }}</p>
+                <p>Lieu : {{ sortieId.lieu.nomLieu }}</p>
+                <p>Rue : {{ sortieId.lieu.rue }}</p>
+                <p>Code postal : {{ sortieId.lieu.ville.codePostal }}</p>
+                <p>Latitude : {{ sortieId.lieu.latitude }}</p>
+                <p>Longitude : {{ sortieId.lieu.longitude }}</p>
+            </div>
         </div>
     </div>
+    {# #}
+    {# Affichage de la lise des participants #}
+    <div style="margin-top: 5rem; margin-left: 15%;">
+        <h3 style="margin-left: 6%;">Liste des participants inscrits</h3>
+        <div class="col-lg-6">
+            <div class="participant-sortie">
+                <table class="table">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Pseudo</th>
+                        <th>Nom</th>
+                    </tr>
+                    </thead>
+                    <tbody class="bg-light">
+                    {% for participant in participantInscrit %}
+                        <tr>
+                            <td>{{ participant.pseudo }}</td>
+                            <td>
+                                <a href="{{ path('participant.detail', {id: participant.id}) }}">{{ participant.prenom }} {{ participant.nom | upper }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+
 
 
 {% endblock %}

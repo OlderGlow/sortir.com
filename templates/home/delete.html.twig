@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annuler la sortie{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="py-5" style="height: 500px;">
+            <div class="mx-auto" style="width: 500px;">
+
+                {{ form_start(form) }}
+
+                <div class="col-lg-12 col-md-12 inline">
+                    <div class="form-group">
+                        <p><u>Nom de la sortie</u> : {{ sortieId.nom }}</p>
+                        <p>Date de la sortie : {{ sortieId.datedebut|date('d/m/y') }}</p>
+                        <p>Campus : {{ sortieId.campus }}</p>
+                        <p>Lieu : {{ sortieId.lieu.rue }} - {{ sortieId.lieu.ville.codePostal }} {{ sortieId.lieu.ville.nomVille }}</p>
+                        {{ form_widget(form) }}
+                        <div class="mt-4 col-lg-12 col-md-6 mt-4">
+                            <div class="row">
+                                <p class="form-group">
+                                    <button class="btn btn-danger">Annuler la sortie</button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            {{ form_end(form) }}
+            <div class="center">
+
+
+
+            </div>
+        </div>
+
+    </div>
+    </div>
+{% endblock %}
