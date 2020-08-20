@@ -8,15 +8,17 @@ use Doctrine\Persistence\ObjectManager;
 
 class EtatFixture extends Fixture
 {
+    public const ETAT_NAME = ['Créée', 'Ouverte', 'Clôturée', 'Activité en cours', 'Passée', 'Annulée'];
     public function load(ObjectManager $manager)
     {
-        $etatName = ['Créée', 'Ouverte', 'Clôturée', 'Activité en cours', 'Passée', 'Annulée'];
 
-        for ($i = 0; $i < count($etatName); $i++)
+
+        for ($i = 0; $i < count(self::ETAT_NAME); $i++)
         {
             $etat = new Etats();
-            $etat->setLibelle($etatName[$i]);
+            $etat->setLibelle(self::ETAT_NAME[$i]);
             $manager->persist($etat);
+            $this->addReference(self::ETAT_NAME[$i], $etat);
         }
 
 

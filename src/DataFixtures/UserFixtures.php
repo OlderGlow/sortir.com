@@ -30,7 +30,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user->setMail('admin@sortir.com');
         $user->setTelephone('0000000000');
         $user->setMotDePasse($this->_encoder->encodePassword($user, 'admin'));
-        $user->setCampus($this->getReference(CampusFixtures::ADMIN_CAMPUS_REFERENCE));
+        $user->setCampus($this->getReference(CampusFixtures::CAMPUS_NAME[1]));
 
         $manager->persist($user);
 
@@ -45,7 +45,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $user->setMail('johndoe@gmail.com');
         $user->setMotDePasse($this->_encoder->encodePassword($user, 'user'));
         $user->setTelephone('0000000000');
-        $user->setCampus($this->getReference(CampusFixtures::USER_CAMPUS_REFERENCE));
+        $user->setCampus($this->getReference(CampusFixtures::CAMPUS_NAME[2]));
         $manager->persist($user);
 
         $this->addReference(self::USER_REFERENCE, $user);

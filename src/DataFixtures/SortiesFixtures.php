@@ -9,26 +9,31 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class SortiesFixtures extends Fixture implements DependentFixtureInterface
 {
-
-    public const SORTIE_REFERENCE = 'sortie';
-
+    public const NOM = ['Avenger 4', 'Sortie Patinoire', 'Faisons les soldes', 'B20', 'Objectif Summer 2K', 'Pot de départ'];
+    public const DESCRIPTION = ['Film des avengers 4 à voir en famille', 'Petite glissade entre amies samedi', 'Profitons des soldes aux galerires Lafayetters',
+        'Concert de Booba au Palais des Congrets', 'Petite remise en forme object abdo pour le bord de la piscine', 'C\'est le départ de Miguel, il retourne en Espagne lundi prochain :('];
+    public const DUREE = ['170', '60', '280', '120', '45', '30'];
+    public const INSCRIT = [10, 8, 12, 5, 7, 20];
     public function load(ObjectManager $manager)
     {
-        $sortie = new Sorties();
-        $sortie->setNom("Conférence Symfony");
-        $sortie->setCampus($this->getReference(CampusFixtures::USER_CAMPUS_REFERENCE));
-        $sortie->setDuree(4);
-        $sortie->setDatedebut(new \DateTime('now'));
-        $sortie->setDatecloture(date_add(new \DateTime('now'),date_interval_create_from_date_string('-1 days')));
-        $sortie->setDescriptioninfos("Conférence sur les bases de Symfony 4.");
-        $sortie->setLieu($this->getReference(LieuxFixtures::LIEUX_REFERENCE));
-        $sortie->setNbinscriptionsmax(20);
-        $sortie->setOrganisateur($this->getReference(UserFixtures::USER_REFERENCE));
+        for ($i = 0; $i < count(self::DESCRIPTION); $i++) {
 
-        $manager->persist($sortie);
+            $sortie = new Sorties();
+            $sortie->setNom(self::NOM[$i]);
+            $sortie->setCampus($this->getReference(CampusFixtures::CAMPUS_NAME[$i]));
+            $sortie->setDuree(self::DUREE[$i]);
+            $sortie->setDatedebut(date_add(new \DateTime('now'), date_interval_create_from_date_string('+3 months')));
+            $sortie->setDatecloture(date_add($sortie->getDatedebut(), date_interval_create_from_date_string('-5 days')));
+            $sortie->setDescriptioninfos(self::DESCRIPTION[$i]);
+            $sortie->setLieu($this->getReference(LieuxFixtures::LIEUX[$i]));
+            $sortie->setNbinscriptionsmax(self::INSCRIT[$i]);
+            $sortie->setOrganisateur($this->getReference(UserFixtures::USER_REFERENCE));
+            $sortie->setEtats($this->getReference(EtatFixture::ETAT_NAME[$i]));
+
+            $manager->persist($sortie);
+            $this->addReference(self::NOM[$i], $sortie);
+        }
         $manager->flush();
-
-        $this->addReference(self::SORTIE_REFERENCE, $sortie);
     }
 
     public function getDependencies()

@@ -9,22 +9,21 @@ use Doctrine\Common\Persistence\ObjectManager;
 class CampusFixtures extends Fixture
 {
 
-    public const ADMIN_CAMPUS_REFERENCE = 'admin-campus';
-    public const USER_CAMPUS_REFERENCE = 'user-campus';
+    public const CAMPUS_NAME = ['OPENCLASSROOMS', 'CEFII', 'OCLOCK', 'CEFOC', 'SACREE COEUR', 'ENI'];
 
     public function load(ObjectManager $manager)
     {
-        $campus = new Campus();
-        $campus->setNomCampus('Université de Poitiers');
-        $manager->persist($campus);
 
-        $this->addReference(self::USER_CAMPUS_REFERENCE, $campus);
 
-        $campus = new Campus();
-        $campus->setNomCampus('ENI');
-        $manager->persist($campus);
+        for ($i = 0; $i < count(self::CAMPUS_NAME); $i++) {
+            $campus = new Campus();
+            $campus->setNomCampus(self::CAMPUS_NAME[$i]);
+            $manager->persist($campus);
+            $this->addReference(self::CAMPUS_NAME[$i], $campus);
+        }
+
         $manager->flush();
 
-        $this->addReference(self::ADMIN_CAMPUS_REFERENCE, $campus);
+
     }
 }

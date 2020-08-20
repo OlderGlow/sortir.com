@@ -266,7 +266,7 @@ class SortieController extends AbstractController
             $this->addFlash('success', 'La sortie a été annulé');
             return $this->redirectToRoute('home');
         }
-        return $this->render('home/view.html.twig',[
+        return $this->render('home/delete.html.twig',[
             'form' => $form->createView(),
             'sortieId' => $sortie
         ]);

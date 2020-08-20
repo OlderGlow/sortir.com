@@ -28,6 +28,7 @@
     </div>
     {# #}
     {# Affichage de la lise des participants #}
+     {% if participantInscrit is defined %}
     <div style="margin-top: 5rem; margin-left: 15%;">
         <h3 style="margin-left: 6%;">Liste des participants inscrits</h3>
         <div class="col-lg-6">
@@ -40,19 +41,21 @@
                     </tr>
                     </thead>
                     <tbody class="bg-light">
-                    {% for participant in participantInscrit %}
-                        <tr>
-                            <td>{{ participant.pseudo }}</td>
-                            <td>
-                                <a href="{{ path('participant.detail', {id: participant.id}) }}">{{ participant.prenom }} {{ participant.nom | upper }}</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
+                        {% for participant in participantInscrit %}
+                            <tr>
+                                <td>{{ participant.pseudo }}</td>
+                                <td>
+                                    <a href="{{ path('participant.detail', {id: participant.id}) }}">{{ participant.prenom }} {{ participant.nom | upper }}</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+     {% endif %}
     </div>
 
 

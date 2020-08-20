@@ -9,25 +9,19 @@ use Doctrine\Common\Persistence\ObjectManager;
 class VilleFixtures extends Fixture
 {
 
-    public const VILLE1_REFERENCE = 'ville1';
-    public const VILLE2_REFERENCE = 'ville2';
+    public const VILLE = ['Angers', 'Nantes', 'Marseille', 'Monaco', 'Bordeaux', 'Paris'];
+    public const CODE_POSTAL = ['49000', '44000', '13000', '98000', '33000', '75000'];
 
     public function load(ObjectManager $manager)
     {
-        $ville = new Villes();
-        $ville->setNomVille('Poitiers');
-        $ville->setCodePostal('86000');
-        $manager->persist($ville);
+
+        for ($i = 0; $i < count(self::VILLE); $i++) {
+            $ville = new Villes();
+            $ville->setNomVille(self::VILLE[$i]);
+            $ville->setCodePostal(self::CODE_POSTAL[$i]);
+            $manager->persist($ville);
+            $this->addReference(self::VILLE[$i], $ville);
+        }
         $manager->flush();
-
-        $this->addReference(self::VILLE1_REFERENCE, $ville);
-
-        $ville = new Villes();
-        $ville->setNomVille('Niort');
-        $ville->setCodePostal('79000');
-        $manager->persist($ville);
-        $manager->flush();
-
-        $this->addReference(self::VILLE2_REFERENCE, $ville);
     }
 }
