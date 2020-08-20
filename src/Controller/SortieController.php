@@ -257,7 +257,6 @@ class SortieController extends AbstractController
     public function canceled(Sorties $sortieId, SortieRepository $sortieRepository, Request $request)
     {
         $titi = $this->eventManager->autoDelete();
-        dd($titi);
         $sortie = $sortieRepository->find($sortieId);
         $etat = $this->etatsRepository->findOneBy(['libelle' => 'Annulée']);
         $form = $this->createForm(SortieCanceledType::class, $sortie);
@@ -270,7 +269,7 @@ class SortieController extends AbstractController
             $this->addFlash('success', 'La sortie a été annulé');
             return $this->redirectToRoute('home');
         }
-        return $this->render('home/view.html.twig',[
+        return $this->render('home/delete.html.twig',[
             'form' => $form->createView(),
             'sortieId' => $sortie
         ]);
