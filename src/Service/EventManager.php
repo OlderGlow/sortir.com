@@ -69,6 +69,8 @@ class EventManager
         $sorties = $this->sortieRepository->findAll();
         $nmbr = count($sorties);
         $cloturee = $this->etatsRepository->findOneBy(['libelle' => 'Clôturée']);
+        $enCour = $this->etatsRepository->findOneBy(['libelle' => 'Activité en cours']);
+        $annule = $this->etatsRepository->findOneBy(['libelle' => 'Annulée']);
         $ouverte = $this->etatsRepository->findOneBy(['libelle' => 'Ouverte']);
         for ($i = 0; $i < $nmbr; $i++)
         {
@@ -86,6 +88,12 @@ class EventManager
             if($sorties[$i]->getDatecloture() < $date)
             {
                 $sorties[$i]->setEtats($cloturee);
+            }
+
+            // Modifier la date pour jour et heure
+            if($sorties[$i]->getDatedebut() == $date && $sorties[$i]->getEtats() != $annule)
+            {
+                $sorties[$i]->setEtats($enCour);
             }
 
         }
