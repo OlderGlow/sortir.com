@@ -30,8 +30,11 @@
                 <p>{{ sortieId.lieu.latitude }}</p>
                 <p>{{ sortieId.lieu.longitude }}</p>
             </div>
+            {% if form is defined %}
             {{ form_widget(form.descriptioninfos) }}
-            <button name="ok">Annulé</button>
+                <button name="ok">Annulé</button>
+            {% endif %}
+
         </div>
     </div>
     {% if form is not defined %}
