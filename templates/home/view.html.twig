@@ -9,9 +9,7 @@
                     <p>Date de fin d'inscription : {{ sortieId.datecloture |date('d/m/y') }} </p>
                     <p>Nombre d'inscriptions max : {{ sortieId.nbinscriptionsmax }} </p>
                     <p>Durée : {{ sortieId.duree }}</p>
-                    {% if form is not defined %}
                     <p>Description : {{ sortieId.descriptioninfos }}</p>
-                    {% endif %}
                 </div>
                 <div class="col-lg-6">
                     <p>Campus : {{ sortieId.campus.nomCampus }}</p>
@@ -22,12 +20,7 @@
                     <p>Longitude : {{ sortieId.lieu.longitude }}</p>
                 </div>
             </div>
-            {% if form is defined %}
-                {{ form_start(form) }}
-                {{ form_row(form.descriptioninfos) }}
-                <button type="submit" class="btn btn-primary">Annulé</button>
-                {{ form_end(form) }}
-            {% endif %}
+
         </div>
     </div>
 
