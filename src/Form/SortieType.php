@@ -34,6 +34,7 @@ class SortieType extends AbstractType
                 'label' => 'Date et heure de la sortie :',
                 'widget' => 'single_text',
                 'required' => true,
+                'model_timezone' => 'Europe/Paris'
 
             ])
             ->add('datecloture', DateType::class, [
