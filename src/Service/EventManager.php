@@ -4,6 +4,7 @@
 namespace App\Service;
 
 
+use App\Entity\Participants;
 use App\Entity\Sorties;
 use App\Repository\EtatsRepository;
 use App\Repository\SortieRepository;
@@ -57,6 +58,26 @@ class EventManager
             if($sorties[$i]->getDatedebut() < $date)
             {
                 $sorties[$i]->setEtats($etat);
+            }
+        }
+        $this->em->flush();
+    }
+
+    public function inscriptionMax(): void
+    {
+        $sorties = $this->sortieRepository->findAll();
+        $nmbr = count($sorties);
+        $cloturee = $this->etatsRepository->findOneBy(['libelle' => 'Clôturée']);
+        $ouverte = $this->etatsRepository->findOneBy(['libelle' => 'Ouverte']);
+        for ($i = 0; $i < $nmbr; $i++)
+        {
+            if(count($sorties[$i]->getEstInscrit()) >= $sorties[$i]->getNbinscriptionsmax())
+            {
+                $sorties[$i]->setEtats($cloturee);
+            }
+            elseif (count($sorties[$i]->getEstInscrit()) < $sorties[$i]->getNbinscriptionsmax())
+            {
+                $sorties[$i]->setEtats($ouverte);
             }
         }
         $this->em->flush();

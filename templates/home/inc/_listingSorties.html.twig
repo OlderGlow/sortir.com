@@ -32,7 +32,7 @@
                                 <td class="text-center">{{ sortie.datecloture | date('d/m/Y') }}</td>
                                 <td class="text-center">{{ sortie.estInscrit|length }}
                                     /{{ sortie.nbinscriptionsmax }}</td>
-                                <td class="text-center">{% if  sortie.estInscrit|length != sortie.nbinscriptionsmax %}{{ sortie.etats.libelle }}{% else %}Cloturée{% endif %}</td>
+                                <td class="text-center">{{ sortie.etats.libelle }}</td>
                                 <td class="text-center">
                                     {% if inscrit == true %}X{% endif %}
                                 </td>
