@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editez votre profil{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="py-5" style="height: 500px;">
+            <div class="mx-auto" style="width: 500px;">
+
+                <div class="profil">
+                    <h2 class="center">{{ participant.pseudo }}</h2>
+
+                    <div class="photo-participant">
+                        {% if participant.photo is defined %}
+                            {% if participant.photo != null %}
+                                <br>
+                                <img src="{{ asset('uploads/photoParticipants') }}/{{ participant.photo }}"
+                                     alt="Photo de profil" class="imagecercle2"/>
+                                <br>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+
+                    <br>
+                    s
+                    <p class="infoDetailUser">Prénom : {{ participant.prenom }}</p>
+                    <p class="infoDetailUser">Nom : {{ participant.nom }}</p>
+                    <p class="infoDetailUser">Téléphone :{{ participant.telephone }}</p>
+                    <p class="infoDetailUser">Email : {{ participant.mail }}</p>
+                    <p class="infoDetailUser">Campus : {{ participant.campus }}</p>
+                </div>
+
+                <div class="center">
+                    <a href="{{ path('home') }}">
+                        <button type="button" class="btn btn-primary"> Retour</button>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

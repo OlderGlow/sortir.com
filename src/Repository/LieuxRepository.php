@@ -23,8 +23,9 @@ class LieuxRepository extends ServiceEntityRepository
     {
 
         $qb = $this->createQueryBuilder('lieux');
-        $qb->select('lieux')
-            ->where('lieux.id LIKE :match')
+        $qb->join('lieux.ville', 's')
+            ->select('lieux')
+            ->where('s.id LIKE :match')
             ->orderBy('lieux.nomLieu', 'ASC')
             ->setParameter('match', '%'.$matchName.'%');
 

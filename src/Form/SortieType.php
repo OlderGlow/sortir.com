@@ -9,30 +9,33 @@ use App\Entity\Participants;
 use App\Entity\Sorties;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SortieType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $date = new \DateTime('now');
-
         $builder
             ->add('nom', TextType::class, [
                 'label' => 'Nom de la sortie :',
                 'required' => true,
             ])
-            ->add('datedebut', DateType::class, [
+            ->add('datedebut', DateTimeType::class, [
                 'label' => 'Date et heure de la sortie :',
                 'widget' => 'single_text',
                 'required' => true,
-                'format' => 'yyyy-MM-dd',
+                'model_timezone' => 'Europe/Paris'
+
             ])
             ->add('datecloture', DateType::class, [
                 'widget' => 'single_text',
@@ -50,11 +53,15 @@ class SortieType extends AbstractType
             ])
             ->add('descriptioninfos', TextareaType::class, [
                 'label' => 'Description et infos :',
-                'required' => false
+                'required' => false,
+                'attr' => ['rows' => '5']
             ])
             ->add('lieu' , LieuxType::class)
             ->add('campus', CampusType::class)
+            ->add('enregistree', SubmitType::class, ['label' => 'Enregistrer', 'attr' => ['class' => 'mr-3 btn btn-primary']])
+            ->add('publier', SubmitType::class, ['label' => 'Publier', 'attr' => ['class' => 'mr-3 btn btn-success']])
         ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

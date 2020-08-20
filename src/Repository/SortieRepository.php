@@ -29,12 +29,14 @@ class SortieRepository extends ServiceEntityRepository
     public function findSearch(SearchData $search, UserInterface $participants): array
     {
         $query = $this
-            ->createQueryBuilder('s');
+            ->createQueryBuilder('s')
+            ->select('o', 's', 'c', 'p')
+            ->leftJoin('s.organisateur', 'o')
+            ->leftJoin('s.campus', 'c')
+            ->leftJoin('s.estInscrit', 'p');
 
         if(!empty($search->campus)){
             $query = $query
-                ->join('s.campus', 'c')
-                ->addSelect('c')
                 ->andWhere('c.id = :val')
                 ->setParameter('val', $search->campus);
         }
@@ -45,24 +47,21 @@ class SortieRepository extends ServiceEntityRepository
         }
         if($search->sortieOrganisateur == true){
             $query = $query
-                ->join('s.organisateur', 'o')
-                ->addSelect('o')
                 ->andWhere('o.id = :val')
                 ->setParameter('val', $participants);
         }
         if($search->sortieInscrit == true){
             $query = $query
-                ->join('s.estInscrit', 'p')
-                ->andWhere('s.id = :val')
+                ->andWhere('p.id = :val')
                 ->setParameter('val', $participants);
         }
 
-        if($search->noInscrit == true){
+       /* if($search->noInscrit == true){
             $query = $query
-                ->innerJoin('s.estInscrit', 'p')
-                ->andWhere('p.id != :val')
+                ->leftJoin('p.sorties', 'x')
+                ->andWhere('x.id = :val')
                 ->setParameter('val', $participants);
-        }
+        } */
 
         //SELECT * FROM sorties AS s LEFT JOIN participant_sortie AS p ON s.id = p.sortie_id WHERE p.participant_id != 4
 
@@ -81,14 +80,25 @@ class SortieRepository extends ServiceEntityRepository
 
         if(!empty($search->datePasse)){
             $query = $query
-                ->leftJoin('s.etats', 'e')
+                ->join('s.etats', 'e')
                 ->addSelect('e')
                 ->andWhere('e.libelle = :val')
                 ->setParameter('val', 'Passée');
         }
 
 
-         return $query->getQuery()->getResult();
+         $resultats = $query->getQuery()->getResult();
 
+        if (!empty($search->noInscrit)) {
+            $resultatFiltres = [];
+            foreach ($resultats as $result) {
+                if (!$result->getEstInscrit()->contains($participants)) {
+                    $resultatFiltres[] = $result;
+                };
+            }
+            $resultats = $resultatFiltres;
+        }
+
+        return $resultats;
     }
 }
