@@ -63,6 +63,7 @@ class SortieController extends AbstractController
         }
 
         $participant = $this->participantsRepository->find($this->getUser());
+        $this->eventManager->toPasse();
 
         $data = new SearchData();
         $form = $this->createForm(SearchForm::class, $data);
@@ -253,8 +254,6 @@ class SortieController extends AbstractController
      */
     public function canceled(Sorties $sortieId, SortieRepository $sortieRepository, Request $request)
     {
-        $titi = $this->eventManager->autoDelete();
-        dd($titi);
         $sortie = $sortieRepository->find($sortieId);
         $etat = $this->etatsRepository->findOneBy(['libelle' => 'Annulée']);
         $form = $this->createForm(SortieCanceledType::class, $sortie);

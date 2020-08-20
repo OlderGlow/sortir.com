@@ -33,7 +33,9 @@ class SortieRepository extends ServiceEntityRepository
             ->select('o', 's', 'c', 'p')
             ->leftJoin('s.organisateur', 'o')
             ->leftJoin('s.campus', 'c')
-            ->leftJoin('s.estInscrit', 'p');
+            ->leftJoin('s.estInscrit', 'p')
+            ->andWhere("DATE_ADD(DATE_ADD(s.datedebut, s.duree, 'minute'),1, 'month') > CURRENT_TIMESTAMP()");
+
 
         if(!empty($search->campus)){
             $query = $query
