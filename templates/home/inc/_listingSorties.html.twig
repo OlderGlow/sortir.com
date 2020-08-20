@@ -18,21 +18,23 @@
                         </tr>
                         </thead>
                         {% for sortie in sorties %}
+                            {% set inscrit = false %}
+                            {% if sortie.estInscrit.first.id is defined %}
 
+                                {% for sortieInscrit in sortie.estInscrit %}
+                                    {% if sortieInscrit.id == app.user.id %}{% set inscrit = true %}{% endif %}
+                                {% endfor %}
+                            {% endif %}
                             <tbody class="bg-white">
                             <tr>
                                 <td class="text-center">{{ sortie.nom }}</td>
                                 <td class="text-center">{{ sortie.datedebut | date('d/m/Y') }}</td>
                                 <td class="text-center">{{ sortie.datecloture | date('d/m/Y') }}</td>
-                                <td class="text-center">{{ sortie.estInscrit|length }}/{{ sortie.nbinscriptionsmax }}</td>
+                                <td class="text-center">{{ sortie.estInscrit|length }}
+                                    /{{ sortie.nbinscriptionsmax }}</td>
                                 <td class="text-center">{{ sortie.etats.libelle }}</td>
-                                <td class="text-center">{% if sortie.estInscrit.first.id is defined %}
-
-                                        {% for sortieInscrit in sortie.estInscrit %}
-                                            {% if sortieInscrit.id == app.user.id %}X{% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-
+                                <td class="text-center">
+                                    {% if inscrit == true %}X{% endif %}
                                 </td>
                                 <td class="text-center"><a
                                             href="{{ path('participant.detail', {id: sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
@@ -42,19 +44,48 @@
 
                                     <!-- AFFICHER -- SE DESINSCRIRE -->
 
+                                    {% if inscrit == true %}
+                                        <a id="desister" href="{{ path('sortie.unsubscribe', {'id': sortie.id}) }}"
+                                           class="btn btn-info" data-toggle="tooltip" data-placement="top"
+                                           title="Se désister">
+                                            Se désister
+                                        </a>
+                                    {% elseif sortie.etats.libelle == "Ouverte" %}
+                                        <a id="inscrire" href="{{ path('sortie.registration', {'id': sortie.id}) }}"
+                                           class="btn btn-success" data-toggle="tooltip" data-placement="top"
+                                           title="S'inscrire">
+                                            S'inscrire
+                                        </a>
 
-
-                                    {% if sortie.etats.libelle == 'Créée' %}
-                                        <a href="{{ path('sortie.edit', {id: sortie.id})}}">Modifier</a> -
-                                        <a href="{{ path('sortie.publish', {id: sortie.id}) }}">Publier</a>
+                                    {% else %}
                                     {% endif %}
 
-                                    {% if (sortie.etats.libelle == 'Activité en cours') or
-                                        (sortie.etats.libelle == 'Passée') or (sortie.etats.libelle == 'Clôturée') %}
-                                        <a href="{{ path('sortie.view', {id: sortie.id}) }}">Afficher</a>
+                                    {% if sortie.organisateur.id == app.user.id and sortie.etats.libelle == "Créée" %}
+                                        <a id="publier" href="{{ path('sortie.publish', {'id': sortie.id}) }}"
+                                           class="btn btn-primary" data-toggle="tooltip" data-placement="top"
+                                           title="S'inscrire">
+                                            Publier
+                                        </a>
+                                    {% endif %}
+                                    {% if sortie.organisateur.id == app.user.id and sortie.etats.libelle == "Créée" %}
+                                        <a id="modifier" href="{{ path('sortie.edit', {'id': sortie.id}) }}"
+                                           class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
+                                           title="Modifier">
+                                            Modifier
+                                        </a>
                                     {% endif %}
 
-                                    {% if sortie.etats.libelle == 'Annulée' %}Modifier {% endif %}
+                                    {% if sortie.organisateur.id == app.user.id %}
+                                        {% if sortie.etats.libelle != "Créée" %}
+                                            {% if sortie.etats.libelle != "Annulée" %}
+                                                <a href="{{ path('sortie.publish', {'id': sortie.id}) }}"
+                                                   class="btn btn-danger" data-toggle="tooltip" data-placement="top"
+                                                   title="Annuler">
+                                                    Annuler
+                                                </a>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
                                 </td>
                             </tr>
                             </tbody>

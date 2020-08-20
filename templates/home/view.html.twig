@@ -1,64 +1,61 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
     <div class="container mt-5">
-
-            <div class="row">
-                <div class="col-md-6">
-
-                    <div class="col-md-3">
-                        <p>Nom de la sortie :</p>
-                        <p>Date de début : </p>
-                        <p>Date de fin d'inscription : </p>
-                        <p>Nombre d'inscriptions max : </p>
-                        <p>Durée : </p>
-                        <p>Description : </p>
-                    </div>
-                    <div class="col-md-3">
-                        <p>{{ sortieId.nom }}</p>
-                        <p>{{ sortieId.datedebut | date('d/m/yy') }}</p>
-                        <p>{{ sortieId.datecloture | date('d/m/yy') }}</p>
-                        <p>{{ sortieId.nbinscriptionsmax }}</p>
-                        <p>{{ sortieId.duree }}</p>
-                        <p>{{ sortieId.descriptioninfos }}</p>
-                    </div>
-
-
+        <div class="row">
+            <div class="col-md-6">
+                <div class="col-md-3">
+                    <p>Nom de la sortie :</p>
+                    <p>Date de début : </p>
+                    <p>Date de fin d'inscription : </p>
+                    <p>Nombre d'inscriptions max : </p>
+                    <p>Durée : </p>
+                    <p>Description : </p>
                 </div>
-                <div class="col-md-6 text-center">
-                    <p>{{ sortieId.campus.nomCampus }}</p>
-                    <p>{{ sortieId.lieu }}</p>
-                    <p>{{ sortieId.lieu.ville.nomVille }}</p>
-                    <p>{{ sortieId.lieu.rue }}</p>
-                    <p>{{ sortieId.lieu.ville.codePostal }}</p>
-                    <p>{{ sortieId.lieu.latitude }}</p>
-                    <p>{{ sortieId.lieu.longitude }}</p>
+                <div class="col-md-3">
+                    <p>{{ sortieId.nom }}</p>
+                    <p>{{ sortieId.datedebut | date('d/m/yy') }}</p>
+                    <p>{{ sortieId.datecloture | date('d/m/yy') }}</p>
+                    <p>{{ sortieId.nbinscriptionsmax }}</p>
+                    <p>{{ sortieId.duree }}</p>
+                    <p>{{ sortieId.descriptioninfos }}</p>
                 </div>
+
             </div>
-
+            <div class="col-md-6 text-center">
+                <p>{{ sortieId.campus.nomCampus }}</p>
+                <p>{{ sortieId.lieu }}</p>
+                <p>{{ sortieId.lieu.ville.nomVille }}</p>
+                <p>{{ sortieId.lieu.rue }}</p>
+                <p>{{ sortieId.lieu.ville.codePostal }}</p>
+                <p>{{ sortieId.lieu.latitude }}</p>
+                <p>{{ sortieId.lieu.longitude }}</p>
+            </div>
+            {{ form_widget(form.descriptioninfos) }}
+            <button name="ok">Annulé</button>
         </div>
-
-    <!--<div class="container">
-        <table class="table">
-            <thead>
-            <tr>
-                <th class="col-xs-4">Pseudo</th>
-                <th class="col-xs-8">Nom</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="col-xs-3">John</td>
-                <td class="col-xs-3">Doe</td>
-                <td class="col-xs-6">johndoe@email.com</td>
-            </tr>
-
-            <tr>
-                <td class="col-xs-3">John</td>
-                <td class="col-xs-3">Doe</td>
-                <td class="col-xs-6">johndoe@email.com</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>-->
+    </div>
+    {% if form is not defined %}
+        <!--<div class="container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="col-xs-4">Pseudo</th>
+                    <th class="col-xs-8">Nom</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="col-xs-3">John</td>
+                    <td class="col-xs-3">Doe</td>
+                    <td class="col-xs-6">johndoe@email.com</td>
+                </tr>
+                <tr>
+                    <td class="col-xs-3">John</td>
+                    <td class="col-xs-3">Doe</td>
+                    <td class="col-xs-6">johndoe@email.com</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>-->
+    {% endif %}
 {% endblock %}

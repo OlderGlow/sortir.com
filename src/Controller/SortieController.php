@@ -95,12 +95,12 @@ class SortieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Si les dates sont antérieur a maintenant on redirige avec erreur
             if ($sortie->getDatedebut() < $now && $sortie->getDatecloture() < $now ) {
-                $this->addFlash('error', 'Merci de saisir une date futur !');
+                $this->addFlash('error', 'Merci de saisir une date future !');
                 return $this->redirectToRoute('sortie.add');
             }
             // si la date de cloture est suppérieur a la date de début on redirige avec erreur
             if ($sortie->getDatecloture() > $sortie->getDatedebut()) {
-                $this->addFlash('error', 'Merci de saisir une date de clôture supérieure a la date de début !');
+                $this->addFlash('error', 'Merci de saisir une date de clôture supérieure à la date de début !');
                 return $this->redirectToRoute('sortie.add');
             }
 
@@ -149,12 +149,12 @@ class SortieController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Si les dates sont antérieur a maintenant on redirige avec erreur
             if ($form->get('datedebut')->getData() < $now) {
-                $this->addFlash('error', 'Merci de saisir une date futur !');
+                $this->addFlash('error', 'Merci de saisir une date future !');
                 return $this->redirectToRoute('sortie.add');
             }
             // si la date de cloture est suppérieur a la date de début on redirige avec erreur
             if ($form->get('datedebut')->getData() > $form->get('datecloture')->getData()) {
-                $this->addFlash('error', 'Merci de saisir une date de clôture supérieure a la date de début !');
+                $this->addFlash('error', 'Merci de saisir une date de clôture supérieure à la date de début !');
                 return $this->redirectToRoute('sortie.add');
             }
 
@@ -209,7 +209,7 @@ class SortieController extends AbstractController
         $publish = $this->etatsRepository->findOneBy(['libelle' => 'Ouverte']);
         $sortie->setEtats($publish);
         $this->em->flush();
-        $this->addFlash('success', 'Sortie publié');
+        $this->addFlash('success', 'Sortie publiée.');
         return $this->redirectToRoute('home');
     }
 
