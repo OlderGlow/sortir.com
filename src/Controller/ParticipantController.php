@@ -24,7 +24,7 @@ class ParticipantController extends AbstractController
     }
 
     /**
-     * @Route("/participant/monprofil/", name="participant.my.profil")
+     * @Route("/participant/monprofil/", name="participant.profil")
      * @param Request $request
      * @param EntityManagerInterface $em
      * @param UserPasswordEncoderInterface $encoder
@@ -67,7 +67,7 @@ class ParticipantController extends AbstractController
          * SI l'id demandé est celui de l'utilisateur connecté on l'envoie vers la modification de son profil,
          */
         if ($user->getUsername() == $participants->getUsername()) {
-            return $this->redirectToRoute('participant.my.profil', [
+            return $this->redirectToRoute('participant.profil', [
                 'participant' => $participants,
             ]);
 
@@ -82,7 +82,7 @@ class ParticipantController extends AbstractController
     }
 
     /**
-     * @Route("/participant/monprofil/maphoto", name="participant.my.detail.myphoto")
+     * @Route("/participant/monprofil/maphoto", name="participant.detail.photo")
      * @param Request $request
      * @param EntityManagerInterface $em
      * @param ParticipantsRepository $repos
@@ -119,7 +119,7 @@ class ParticipantController extends AbstractController
                     );
                 } catch (FileException $e) {
                     $this->addFlash('error', "Erreur lors de l'upload de l'image");
-                    return $this->redirectToRoute('participant.my.profil');
+                    return $this->redirectToRoute('participant.profil');
                 }
 
                 // on inscrit le nom de la photo dans le participant
@@ -129,7 +129,7 @@ class ParticipantController extends AbstractController
             $em->persist($user);
             $em->flush();
             $this->addFlash('success', "Image enregistrée !");
-            return $this->redirectToRoute('participant.my.profil');
+            return $this->redirectToRoute('participant.profil');
         }
 
         return $this->render('participant/photo.html.twig', [
