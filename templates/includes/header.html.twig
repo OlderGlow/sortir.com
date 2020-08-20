@@ -44,8 +44,10 @@
             {% if app.user.photo is defined %}
                 {% if app.user.photo != null %}
                     <div class="avatar" style="margin-left: 1rem;">
+
+                        <a href="{{ path('participant.profil') }}">
                         <img src="{{ asset('uploads/photoParticipants') }}/{{ app.user.photo }}"
-                             class="imagecercle" alt="Photo de profil"/>
+                             class="imagecercle" alt="Photo de profil"/></a>
                     </div>
                 {% endif %}
             {% endif %}

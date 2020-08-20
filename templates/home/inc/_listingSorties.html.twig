@@ -28,7 +28,7 @@
                             <tbody class="bg-white">
                             <tr>
                                 <td class="text-center">{{ sortie.nom }}</td>
-                                <td class="text-center">{{ sortie.datedebut | date('d/m/Y') }}</td>
+                                <td class="text-center">{{ sortie.datedebut|  date('d/m/Y H:i') }}</td>
                                 <td class="text-center">{{ sortie.datecloture | date('d/m/Y') }}</td>
                                 <td class="text-center">{{ sortie.estInscrit|length }}
                                     /{{ sortie.nbinscriptionsmax }}</td>
@@ -40,17 +40,20 @@
                                             href="{{ path('participant.detail', {id: sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
                                 </td>
                                 <td class="text-center">
-
-
-                                    <!-- AFFICHER -- SE DESINSCRIRE -->
-
-                                    {% if inscrit == true %}
+                                    {% if sortie.etats.libelle != "Créée" %}
+                                        <a id="afficher" href="{{ path('sortie.view', {'id': sortie.id}) }}"
+                                           class="btn btn-dark" data-toggle="tooltip" data-placement="top"
+                                           title="Afficher">
+                                            Afficher
+                                        </a>
+                                    {% endif %}
+                                    {% if inscrit == true and sortie.organisateur.id != app.user.id and sortie.datecloture<"now"|date("d/m/Y", "Europe/Paris") %}
                                         <a id="desister" href="{{ path('sortie.unsubscribe', {'id': sortie.id}) }}"
                                            class="btn btn-info" data-toggle="tooltip" data-placement="top"
                                            title="Se désister">
                                             Se désister
                                         </a>
-                                    {% elseif sortie.etats.libelle == "Ouverte" %}
+                                    {% elseif sortie.etats.libelle == "Ouverte" and sortie.estInscrit|length != sortie.nbinscriptionsmax and sortie.organisateur.id != app.user.id and sortie.datecloture<"now"|date("d/m/Y", "Europe/Paris") %}
                                         <a id="inscrire" href="{{ path('sortie.registration', {'id': sortie.id}) }}"
                                            class="btn btn-success" data-toggle="tooltip" data-placement="top"
                                            title="S'inscrire">
@@ -78,7 +81,7 @@
                                     {% if sortie.organisateur.id == app.user.id %}
                                         {% if sortie.etats.libelle != "Créée" %}
                                             {% if sortie.etats.libelle != "Annulée" %}
-                                                <a href="{{ path('sortie.publish', {'id': sortie.id}) }}"
+                                                <a href="{{ path('sortie.canceled', {'id': sortie.id}) }}"
                                                    class="btn btn-danger" data-toggle="tooltip" data-placement="top"
                                                    title="Annuler">
                                                     Annuler

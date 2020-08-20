@@ -32,33 +32,10 @@
             </div>
             {% if form is defined %}
             {{ form_widget(form.descriptioninfos) }}
-                <button name="ok">Annulé</button>
+                <button type="submit" name="ok">Annulé</button>
             {% endif %}
 
         </div>
     </div>
-    {% if form is not defined %}
-        <!--<div class="container">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th class="col-xs-4">Pseudo</th>
-                    <th class="col-xs-8">Nom</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="col-xs-3">John</td>
-                    <td class="col-xs-3">Doe</td>
-                    <td class="col-xs-6">johndoe@email.com</td>
-                </tr>
-                <tr>
-                    <td class="col-xs-3">John</td>
-                    <td class="col-xs-3">Doe</td>
-                    <td class="col-xs-6">johndoe@email.com</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>-->
-    {% endif %}
+
 {% endblock %}
