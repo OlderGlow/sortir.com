@@ -71,14 +71,18 @@ class EventManager
         $ouverte = $this->etatsRepository->findOneBy(['libelle' => 'Ouverte']);
         for ($i = 0; $i < $nmbr; $i++)
         {
-            if(count($sorties[$i]->getEstInscrit()) >= $sorties[$i]->getNbinscriptionsmax())
+            if($sorties[$i]->getEtats() == $ouverte)
             {
-                $sorties[$i]->setEtats($cloturee);
+                if(count($sorties[$i]->getEstInscrit()) >= $sorties[$i]->getNbinscriptionsmax())
+                {
+                    $sorties[$i]->setEtats($cloturee);
+                }
+                elseif (count($sorties[$i]->getEstInscrit()) < $sorties[$i]->getNbinscriptionsmax())
+                {
+                    $sorties[$i]->setEtats($ouverte);
+                }
             }
-            elseif (count($sorties[$i]->getEstInscrit()) < $sorties[$i]->getNbinscriptionsmax())
-            {
-                $sorties[$i]->setEtats($ouverte);
-            }
+
         }
         $this->em->flush();
     }
