@@ -65,6 +65,7 @@ class EventManager
 
     public function inscriptionMax(): void
     {
+        $date = $this->dateUpdate(0,0,0);
         $sorties = $this->sortieRepository->findAll();
         $nmbr = count($sorties);
         $cloturee = $this->etatsRepository->findOneBy(['libelle' => 'Clôturée']);
@@ -81,6 +82,10 @@ class EventManager
                 {
                     $sorties[$i]->setEtats($ouverte);
                 }
+            }
+            if($sorties[$i]->getDatecloture() < $date)
+            {
+                $sorties[$i]->setEtats($cloturee);
             }
 
         }
