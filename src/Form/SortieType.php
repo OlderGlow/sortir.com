@@ -2,12 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Campus;
-use App\Entity\Etats;
-use App\Entity\Lieux;
-use App\Entity\Participants;
 use App\Entity\Sorties;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;

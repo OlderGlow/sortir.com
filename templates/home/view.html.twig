@@ -1,41 +1,35 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="col-md-3">
-                    <p>Nom de la sortie :</p>
-                    <p>Date de début : </p>
-                    <p>Date de fin d'inscription : </p>
-                    <p>Nombre d'inscriptions max : </p>
-                    <p>Durée : </p>
-                    <p>Description : </p>
+    <div class="container">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-6">
+                    <p>Nom de la sortie : {{ sortieId.nom }}</p>
+                    <p>Date de début : {{ sortieId.datedebut|date('d/m/y - H:i') }} </p>
+                    <p>Date de fin d'inscription : {{ sortieId.datecloture |date('d/m/y') }} </p>
+                    <p>Nombre d'inscriptions max : {{ sortieId.nbinscriptionsmax }} </p>
+                    <p>Durée : {{ sortieId.duree }}</p>
+                    {% if form is not defined %}
+                    <p>Description : {{ sortieId.descriptioninfos }}</p>
+                    {% endif %}
                 </div>
-                <div class="col-md-3">
-                    <p>{{ sortieId.nom }}</p>
-                    <p>{{ sortieId.datedebut | date('d/m/yy') }}</p>
-                    <p>{{ sortieId.datecloture | date('d/m/yy') }}</p>
-                    <p>{{ sortieId.nbinscriptionsmax }}</p>
-                    <p>{{ sortieId.duree }}</p>
-                    <p>{{ sortieId.descriptioninfos }}</p>
+                <div class="col-lg-6">
+                    <p>Campus : {{ sortieId.campus.nomCampus }}</p>
+                    <p>Lieu : {{ sortieId.lieu.nomLieu }}</p>
+                    <p>Rue : {{ sortieId.lieu.rue }}</p>
+                    <p>Code postal : {{ sortieId.lieu.ville.codePostal }}</p>
+                    <p>Latitude : {{ sortieId.lieu.latitude }}</p>
+                    <p>Longitude : {{ sortieId.lieu.longitude }}</p>
                 </div>
-
-            </div>
-            <div class="col-md-6 text-center">
-                <p>{{ sortieId.campus.nomCampus }}</p>
-                <p>{{ sortieId.lieu }}</p>
-                <p>{{ sortieId.lieu.ville.nomVille }}</p>
-                <p>{{ sortieId.lieu.rue }}</p>
-                <p>{{ sortieId.lieu.ville.codePostal }}</p>
-                <p>{{ sortieId.lieu.latitude }}</p>
-                <p>{{ sortieId.lieu.longitude }}</p>
             </div>
             {% if form is defined %}
-            {{ form_widget(form.descriptioninfos) }}
-                <button type="submit" name="ok">Annulé</button>
+                {{ form_start(form) }}
+                {{ form_row(form.descriptioninfos) }}
+                <button type="submit" class="btn btn-primary">Annulé</button>
+                {{ form_end(form) }}
             {% endif %}
-
         </div>
     </div>
+
 
 {% endblock %}

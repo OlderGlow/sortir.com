@@ -7,6 +7,7 @@ use App\Entity\Lieux;
 use App\Entity\Participants;
 use App\Entity\Sorties;
 use App\Form\SearchForm;
+use App\Form\SortieCanceledType;
 use App\Form\SortieType;
 use App\Repository\EtatsRepository;
 use App\Repository\ParticipantsRepository;
@@ -250,12 +251,18 @@ class SortieController extends AbstractController
      * @param SortieRepository $sortieRepository
      * @return RedirectResponse|Response
      */
-    public function canceled(Sorties $sortieId, SortieRepository $sortieRepository)
+    public function canceled(Sorties $sortieId, SortieRepository $sortieRepository, Request $request)
     {
+        $titi = $this->eventManager->autoDelete();
+        dd($titi);
         $sortie = $sortieRepository->find($sortieId);
-        $form = $this->createForm(SortieType::class, $sortie);
+        $etat = $this->etatsRepository->findOneBy(['libelle' => 'Annulée']);
+        $form = $this->createForm(SortieCanceledType::class, $sortie);
+
+        $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $sortie->setDescriptioninfos($form->get('descriptioninfos')->getData());
+            $sortie->setEtats($etat);
             $this->em->flush();
             $this->addFlash('success', 'La sortie a été annulé');
             return $this->redirectToRoute('home');
