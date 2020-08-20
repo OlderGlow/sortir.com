@@ -47,13 +47,13 @@
                                             Afficher
                                         </a>
                                     {% endif %}
-                                    {% if inscrit == true and sortie.organisateur.id != app.user.id and sortie.datecloture>"now"|date("d/m/Y", "Europe/Paris") %}
+                                    {% if inscrit == true and sortie.organisateur.id != app.user.id and sortie.datecloture<"now"|date("d/m/Y", "Europe/Paris") %}
                                         <a id="desister" href="{{ path('sortie.unsubscribe', {'id': sortie.id}) }}"
                                            class="btn btn-info" data-toggle="tooltip" data-placement="top"
                                            title="Se désister">
                                             Se désister
                                         </a>
-                                    {% elseif sortie.etats.libelle == "Ouverte" and sortie.estInscrit|length != sortie.nbinscriptionsmax and sortie.organisateur.id != app.user.id and sortie.datecloture>"now"|date("d/m/Y", "Europe/Paris") %}
+                                    {% elseif sortie.etats.libelle == "Ouverte" and sortie.estInscrit|length != sortie.nbinscriptionsmax and sortie.organisateur.id != app.user.id and sortie.datecloture<"now"|date("d/m/Y", "Europe/Paris") %}
                                         <a id="inscrire" href="{{ path('sortie.registration', {'id': sortie.id}) }}"
                                            class="btn btn-success" data-toggle="tooltip" data-placement="top"
                                            title="S'inscrire">
