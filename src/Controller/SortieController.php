@@ -189,14 +189,17 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/sortie/view/{id}", name="sortie.view")
-     * @param Request $request
+     * @param Sorties $sortieId
+     * @param SortieRepository $sortieRepository
      * @return RedirectResponse|Response
      */
     public function view(Sorties $sortieId, SortieRepository $sortieRepository)
     {
         $sortie = $sortieRepository->find($sortieId);
+        $participantInscrit = $sortieId->getEstInscrit();
         return $this->render('home/view.html.twig', [
-            'sortieId' => $sortie
+            'sortieId' => $sortie,
+            'participantInscrit' => $participantInscrit,
         ]);
     }
 
