@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Editez votre profil{% endblock %}
+{% block title %}Profil de {{ participant.pseudo  }}{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -22,7 +22,7 @@
                     </div>
 
                     <br>
-                    s
+
                     <p class="infoDetailUser">Prénom : {{ participant.prenom }}</p>
                     <p class="infoDetailUser">Nom : {{ participant.nom }}</p>
                     <p class="infoDetailUser">Téléphone :{{ participant.telephone }}</p>

@@ -23,7 +23,7 @@ class SortiesFixtures extends Fixture implements DependentFixtureInterface
             $sortie->setCampus($this->getReference(CampusFixtures::CAMPUS_NAME[$i]));
             $sortie->setDuree(self::DUREE[$i]);
             $sortie->setDatedebut(date_add(new \DateTime('now'), date_interval_create_from_date_string('+3 months')));
-            $sortie->setDatecloture(date_add($sortie->getDatedebut(), date_interval_create_from_date_string('-5 days')));
+            $sortie->setDatecloture(new \DateTime('now'), date_interval_create_from_date_string('+ 61 days'));
             $sortie->setDescriptioninfos(self::DESCRIPTION[$i]);
             $sortie->setLieu($this->getReference(LieuxFixtures::LIEUX[$i]));
             $sortie->setNbinscriptionsmax(self::INSCRIT[$i]);

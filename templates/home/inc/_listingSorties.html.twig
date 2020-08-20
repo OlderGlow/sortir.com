@@ -32,7 +32,7 @@
                                 <td class="text-center">{{ sortie.datecloture | date('d/m/Y') }}</td>
                                 <td class="text-center">{{ sortie.estInscrit|length }}
                                     /{{ sortie.nbinscriptionsmax }}</td>
-                                <td class="text-center">{{ sortie.etats.libelle }}</td>
+                                <td class="text-center">{% if  sortie.estInscrit|length != sortie.nbinscriptionsmax %}{{ sortie.etats.libelle }}{% else %}Cloturée{% endif %}</td>
                                 <td class="text-center">
                                     {% if inscrit == true %}X{% endif %}
                                 </td>
@@ -70,7 +70,7 @@
                                             Publier
                                         </a>
                                     {% endif %}
-                                    {% if sortie.organisateur.id == app.user.id and sortie.etats.libelle == "Créée" %}
+                                    {% if sortie.organisateur.id == app.user.id and sortie.etats.libelle == "Créée" or app.user.roles == ["ROLE_ADMIN"] %}
                                         <a id="modifier" href="{{ path('sortie.edit', {'id': sortie.id}) }}"
                                            class="btn btn-secondary" data-toggle="tooltip" data-placement="top"
                                            title="Modifier">

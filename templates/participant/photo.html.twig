@@ -28,8 +28,8 @@
                                     <p class="form-group">
                                         <button class="btn btn-success">Valider</button>
                                     </p>
-                                    <a href="{{ path('participant.my.profil') }}">
-                                        <button type="button" class="btn btn-primary ml-3"> Retour</button>
+                                    <a href="{{ path('participant.profil') }}">
+                                        <button type="button" class="btn btn-primary ml-3">Retour</button>
                                     </a>
                                 </div>
                             </div>
@@ -42,5 +42,5 @@
             </div>
         </div>
     </div>
-
+{{ include('js/jsPhotoUpload.html.twig')}}
 {% endblock %}
