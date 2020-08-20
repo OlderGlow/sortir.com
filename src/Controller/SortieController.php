@@ -243,6 +243,28 @@ class SortieController extends AbstractController
         return $this->redirectToRoute('home');
     }
 
+    /**
+     * @Route("/sortie/canceled/{id}", name="sortie.canceled")
+     * @param Sorties $sortie
+     * @param Participants $participants
+     * @param SortieRepository $sortieRepository
+     * @return RedirectResponse|Response
+     */
+    public function canceled(Sorties $sortieId, SortieRepository $sortieRepository)
+    {
+        $sortie = $sortieRepository->find($sortieId);
+        $form = $this->createForm(SortieType::class, $sortie);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $sortie->setDescriptioninfos($form->get('descriptioninfos')->getData());
+            $this->em->flush();
+            $this->addFlash('success', 'La sortie a été annulé');
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('home/view.html.twig',[
+            'form' => $form->createView(),
+            'sortieId' => $sortie
+        ]);
+    }
 
 
 }
