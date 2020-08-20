@@ -81,11 +81,13 @@
                                     {% if sortie.organisateur.id == app.user.id %}
                                         {% if sortie.etats.libelle != "Créée" %}
                                             {% if sortie.etats.libelle != "Annulée" %}
-                                                <a href="{{ path('sortie.canceled', {'id': sortie.id}) }}"
-                                                   class="btn btn-danger" data-toggle="tooltip" data-placement="top"
-                                                   title="Annuler">
-                                                    Annuler
-                                                </a>
+                                                {% if sortie.etats.libelle != "Passée" %}
+                                                    <a href="{{ path('sortie.canceled', {'id': sortie.id}) }}"
+                                                       class="btn btn-danger" data-toggle="tooltip" data-placement="top"
+                                                       title="Annuler">
+                                                        Annuler
+                                                    </a>
+                                                {% endif %}
                                             {% endif %}
                                         {% endif %}
                                     {% endif %}
