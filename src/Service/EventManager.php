@@ -9,6 +9,7 @@ use App\Entity\Sorties;
 use App\Repository\EtatsRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class EventManager
 {
@@ -36,67 +37,68 @@ class EventManager
     public function dateUpdate($char, $i, $time)
     {
         $now = new \DateTime('now');
-        if($char == 0 && $i == 0 && $time == 0)
+        if ($char == 0 && $i == 0 && $time == 0)
             return $now;
 
 
-        if($char === '+')
-        {
-            $now->modify($char.$i.$time);
+        if ($char === '+') {
+            $now->modify($char . $i . $time);
         }
         return $now;
     }
 
-    public function toPasse(): void
-    {
-        $sorties = $this->sortieRepository->findAll();
-        $nmbr = count($sorties);
-        $etat = $this->etatsRepository->findOneBy(['libelle' => 'Passée']);
-        $date = $this->dateUpdate(0,0,0);
-        for ($i = 0; $i < $nmbr; $i++)
-        {
-            if($sorties[$i]->getDatedebut() < $date)
-            {
-                $sorties[$i]->setEtats($etat);
-            }
-        }
-        $this->em->flush();
-    }
 
-    public function inscriptionMax(): void
+    public function Etats(): void
     {
-        $date = $this->dateUpdate(0,0,0);
+        $date = $this->dateUpdate(0, 0, 0);
         $sorties = $this->sortieRepository->findAll();
         $nmbr = count($sorties);
         $cloturee = $this->etatsRepository->findOneBy(['libelle' => 'Clôturée']);
         $enCour = $this->etatsRepository->findOneBy(['libelle' => 'Activité en cours']);
         $annule = $this->etatsRepository->findOneBy(['libelle' => 'Annulée']);
         $ouverte = $this->etatsRepository->findOneBy(['libelle' => 'Ouverte']);
-        for ($i = 0; $i < $nmbr; $i++)
-        {
-            if($sorties[$i]->getEtats() == $ouverte)
-            {
-                if(count($sorties[$i]->getEstInscrit()) >= $sorties[$i]->getNbinscriptionsmax())
+        $passee = $this->etatsRepository->findOneBy(['libelle' => 'Passée']);
+        for ($i = 0; $i < $nmbr; $i++) {
+            if($sorties[$i]->getEtats()->getLibelle() == $ouverte->getLibelle()) {
+                if ($sorties[$i]->getEstInscrit()->count() == $sorties[$i]->getNbInscriptionsMax()||
+                    $sorties[$i]->getDatecloture()->format("m.d.y h:m") < date("m.d.y h:m" ))
                 {
                     $sorties[$i]->setEtats($cloturee);
+                    $this->em->persist($sorties[$i]);
                 }
-                elseif (count($sorties[$i]->getEstInscrit()) < $sorties[$i]->getNbinscriptionsmax())
+            }
+            elseif($sorties[$i]->getEtats()->getLibelle() == $cloturee->getLibelle()) {
+                if($sorties[$i]->getDatedebut()->format("m.d.y h:m") == date("m.d.y h:m")){
+                    $sorties[$i]->setEtats($enCour);
+                    $this->em->persist($sorties[$i]);
+                }
+                if ($sorties[$i]->getEstInscrit()->count() < $sorties[$i]->getNbInscriptionsMax() &&
+                    $sorties[$i]->getDatecloture()->format("m.d.y h:m") > date("m.d.y h:m" ))
                 {
                     $sorties[$i]->setEtats($ouverte);
+                    $this->em->persist($sorties[$i]);
+                }
+                elseif ($sorties[$i]->getDatedebut()->format("m.d.y h:m") < date("m.d.y h:m")) {
+                    if (date_add($sorties[$i]->getDatedebut(),
+                            new \DateInterval("PT{$sorties[$i]->getDuree()}M")) < new \DateTime()) {
+                        $sorties[$i]->setEtats($passee);
+                        $this->em->persist($sorties[$i]);
+                    }
                 }
             }
-            if($sorties[$i]->getDatecloture() < $date)
-            {
-                $sorties[$i]->setEtats($cloturee);
+            elseif($sorties[$i]->getEtats()->getLibelle() == $enCour->getLibelle()) {
+                if ($sorties[$i]->getDatecloture()->format("m.d.y h:m") < date("m.d.y h:m" ))
+                {
+                    $sorties[$i]->setEtats($cloturee);
+                    $this->em->persist($sorties[$i]);
+                }
+                if (date_add($sorties[$i]->getDatedebut(),
+                        new \DateInterval("PT{$sorties[$i]->getDuree()}M")) < new \DateTime()) {
+                    $sorties[$i]->setEtats($passee);
+                    $this->em->persist($sorties[$i]);
+                }
             }
-
-            // Modifier la date pour jour et heure
-            if($sorties[$i]->getDatedebut() == $date && $sorties[$i]->getEtats() != $annule)
-            {
-                $sorties[$i]->setEtats($enCour);
-            }
-
+            $this->em->flush();
         }
-        $this->em->flush();
     }
 }

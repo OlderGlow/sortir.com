@@ -63,8 +63,7 @@ class SortieController extends AbstractController
         }
 
         $participant = $this->participantsRepository->find($this->getUser());
-        $this->eventManager->toPasse();
-        $this->eventManager->inscriptionMax();
+        $this->eventManager->Etats();
         $data = new SearchData();
         $form = $this->createForm(SearchForm::class, $data);
         $form->handleRequest($request);
