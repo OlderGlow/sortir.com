@@ -91,8 +91,7 @@ class AdminDashboardController extends AbstractController
         $form = $this->createForm(VillesType::class, $villes);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
             $this->addFlash('success', 'La ville a été éditée avec succès.');
             return $this->redirectToRoute('admin.ville.home');
@@ -105,7 +104,6 @@ class AdminDashboardController extends AbstractController
     }
 
 
-
     /**
      * @Route("/admin/villes/{id}", name="admin.ville.delete", methods="DELETE")
      * @param Villes $villes
@@ -114,8 +112,7 @@ class AdminDashboardController extends AbstractController
      */
     public function deleteVille(Villes $villes, Request $request)
     {
-        if($this->isCsrfTokenValid('delete' . $villes->getId(), $request->get('_token')))
-        {
+        if ($this->isCsrfTokenValid('delete' . $villes->getId(), $request->get('_token'))) {
             $this->em->remove($villes);
             $this->em->flush();
             $this->addFlash('success', 'La ville a été supprimée avec succès.');
@@ -128,8 +125,6 @@ class AdminDashboardController extends AbstractController
     /*
      * <------------------------CAMPUS---------------------------------->
      */
-
-
 
 
     /**
@@ -187,8 +182,7 @@ class AdminDashboardController extends AbstractController
         $form = $this->createForm(CampusType::class, $campus);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
             $this->addFlash('success', 'Le campus a été édité avec succès.');
             return $this->redirectToRoute('admin.campus.home');
@@ -201,7 +195,6 @@ class AdminDashboardController extends AbstractController
     }
 
 
-
     /**
      * @Route("/admin/campus/{id}", name="admin.campus.delete", methods="DELETE")
      * @param Campus $campus
@@ -210,8 +203,7 @@ class AdminDashboardController extends AbstractController
      */
     public function deleteCampus(Campus $campus, Request $request)
     {
-        if($this->isCsrfTokenValid('delete' . $campus->getId(), $request->get('_token')))
-        {
+        if ($this->isCsrfTokenValid('delete' . $campus->getId(), $request->get('_token'))) {
             $this->em->remove($campus);
             $this->em->flush();
             $this->addFlash('success', 'Le campus a été supprimé avec succès.');
@@ -254,17 +246,15 @@ class AdminDashboardController extends AbstractController
     public function addParticipant(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $participant = new Participants();
-
         $form = $this->createForm(ParticipantsType::class, $participant);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $newpwd = $form->get('motDePasse')->getData();
             $newEncodedPassword = $encoder->encodePassword($participant, $newpwd);
             $participant->setPassword($newEncodedPassword);
-            $participant->setRoles(['ROLE_USER']);
 
+            $participant->setRoles(['ROLE_USER']);
 
             $this->em->persist($participant);
             $this->em->flush();
@@ -286,15 +276,13 @@ class AdminDashboardController extends AbstractController
      */
     public function editParticipant(Participants $participants, Request $request, UserPasswordEncoderInterface $encoder)
     {
-        $user = $this->getUser();
         $form = $this->createForm(ParticipantsType::class, $participants);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $newpwd = $form->get('motDePasse')['first']->getData();
-            $newEncodedPassword = $encoder->encodePassword($user, $newpwd);
-            $user->setPassword($newEncodedPassword);
+            $newEncodedPassword = $encoder->encodePassword($participants, $newpwd);
+            $participants->setPassword($newEncodedPassword);
 
             $this->em->flush();
             $this->addFlash('success', 'Le participant a été édité avec succès.');
@@ -307,8 +295,6 @@ class AdminDashboardController extends AbstractController
         ]);
     }
 
-
-
     /**
      * @Route("/admin/participant/{id}", name="admin.participant.delete", methods="DELETE")
      * @param Participants $participants
@@ -317,8 +303,7 @@ class AdminDashboardController extends AbstractController
      */
     public function deleteParticipant(Participants $participants, Request $request)
     {
-        if($this->isCsrfTokenValid('delete' . $participants->getId(), $request->get('_token')))
-        {
+        if ($this->isCsrfTokenValid('delete' . $participants->getId(), $request->get('_token'))) {
             $this->em->remove($participants);
             $this->em->flush();
             $this->addFlash('success', 'Le participant a bien été supprimé.');
