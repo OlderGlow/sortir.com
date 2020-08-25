@@ -25,23 +25,6 @@ _Commandes :_
 
 `composer install`
 
-`symfony serve`
+`symfony serve` (si Symfony est installé)
 
-# Fonctionnalités OK :
-
-- Login/Logout
-- Gestion des rôles
-- Pagination
-- Redirect to /connexion lorsque un anonyme arrive sur /
-- Partie administration pour villes, campus et participants
-- Date et nom sur accueil
-- Responsive (Mobile + Tablette)
-
-# @todo :
-
--Rajouter table Etat avec relation OnetoMany
-- Ajax (Edit, Delete, Filter...)
-- Gestion des sorties
-- FileUploader photo (+ à afficher dans le header)
-- Filtres et recherche
-- Mot de passe oublié
+Sinon `php bin/console server:start`
